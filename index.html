@@ -12,8 +12,6 @@ if(localStorage.getItem('ag-motion')==='off'){document.addEventListener('DOMCont
 <meta name="description" content="I extract clear insight from complex data and build the systems that turn it into decisions. Data analysis, BI, and software engineering.">
 <meta name="theme-color" content="#FAF8F1">
 <meta name="color-scheme" content="light">
-<!-- DEPLOY NOTE: these URLs assume the repo is named wezzzaaa.github.io (your cleanest URL).
-     If you choose a different repo name, update the 5 URLs below to match. -->
 <link rel="canonical" href="https://wezzzaaa.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ahmed Galal Abdelhai — Data Analyst &amp; Software Engineer">
@@ -64,7 +62,7 @@ a{color:inherit;text-decoration:none} ul{list-style:none}
 .skip:focus{left:0}
 .ic{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ===== NAV (order = real scroll order: Method · Skills · Work · Experience · Contact) ===== */
+/* ===== NAV — order matches scroll order ===== */
 .pillnav{position:fixed;top:14px;left:0;right:0;margin-inline:auto;width:min(1080px,96vw);z-index:200;
   display:flex;align-items:center;gap:6px;background:var(--paper2);border:2px solid var(--ink);
   border-radius:999px;box-shadow:var(--sx) 5px 0 var(--ink);padding:8px 12px;flex-wrap:nowrap}
@@ -147,8 +145,9 @@ html[lang="ar"] h1{line-height:1.15}
 body.motion-off .spark .sp-line{stroke-dashoffset:0;animation:none}
 body.motion-off .spark .sp-dot{opacity:1;animation:none}
 
-/* ===== PHOTO ZONE — reserved bands: interior 100% clear for the portrait ===== */
-.photo-zone{position:relative;display:flex;justify-content:center;padding:88px 64px}
+/* ===== PHOTO ZONE — flex bands: overlap is structurally impossible ===== */
+.photo-zone{display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;padding:6px 56px}
+.zone-band{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:14px;width:100%;position:relative;z-index:3}
 .photo{position:relative;margin:0;max-width:370px;width:100%;background:var(--paper2);border:2px solid var(--ink);border-radius:20px;box-shadow:9px 9px 0 var(--ink);padding:12px;rotate:1.6deg;transition:rotate .3s ease;z-index:1;overflow:visible}
 .photo:hover{rotate:0deg}
 .photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top;border-radius:12px;border:2px solid var(--ink)}
@@ -160,26 +159,21 @@ body.motion-off .spark .sp-dot{opacity:1;animation:none}
 .tape.t1{top:-12px;left:44px;rotate:-7deg}
 .tape.t2{bottom:-12px;right:44px;rotate:5deg}
 .pin{position:absolute;z-index:6}
-.ring{top:-2px;left:2%;width:96px;height:96px}
+.ring{top:-18px;left:-18px;width:84px;height:84px}
 .ring svg{display:block;width:100%;height:100%;rotate:-6deg}
-.ring .rtxt{font-family:var(--f);font-size:7.5px;font-weight:800;letter-spacing:.7px;fill:var(--ink)}
+.ring .rtxt{font-family:var(--f);font-size:7px;font-weight:800;letter-spacing:.7px;fill:var(--ink)}
 .js .ring svg{animation:rot 22s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
 .sticker{font-size:var(--s7);font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--yel);border:2px solid var(--ink);border-radius:999px;padding:9px 14px;box-shadow:3px 3px 0 var(--ink);white-space:nowrap;display:inline-block}
-/* identity titles — zone-level slots in the reserved bands */
-.ftitle{position:absolute;z-index:3}
-.f-da{top:24px;right:3%;rotate:2deg}
-.f-as{top:24px;left:26%;rotate:-2deg;background:var(--paper2)}
-.f-so{bottom:18px;left:3%;rotate:-2deg}
-.f-is{bottom:18px;right:3%;rotate:2deg;background:var(--paper2)}
-html[dir="rtl"] .f-da{right:auto;left:3%;rotate:-2deg}
-html[dir="rtl"] .f-as{left:auto;right:26%;rotate:2deg}
-html[dir="rtl"] .f-so{left:auto;right:3%;rotate:2deg}
-html[dir="rtl"] .f-is{right:auto;left:3%;rotate:-2deg}
+.ftitle{display:inline-flex}
+.f-as{rotate:-2deg;background:var(--paper2)}
+.f-da{rotate:2deg}
+.f-so{rotate:-2deg}
+.f-is{rotate:2deg;background:var(--paper2)}
 .medal{width:56px;height:56px;display:grid;place-items:center;background:var(--paper2);border:2px solid var(--ink);border-radius:50%;box-shadow:3px 3px 0 var(--ink)}
 .medal .ic{width:24px;height:24px;stroke-width:2.2}
-.zm1{top:44%;inset-inline-start:0;rotate:-3deg}
-.zm2{top:54%;inset-inline-end:0;rotate:3deg}
+.zm1{top:50%;inset-inline-start:0;translate:0 -50%;rotate:-3deg}
+.zm2{top:50%;inset-inline-end:0;translate:0 -50%;rotate:3deg}
 .js .ftitle,.js .medal{animation:bob 6.5s ease-in-out infinite alternate}
 .js .f-as{animation-delay:.4s}.js .f-so{animation-delay:.8s}.js .f-is{animation-delay:1.1s}
 .js .zm1{animation-delay:.5s}.js .zm2{animation-delay:1.3s}
@@ -433,7 +427,7 @@ html[dir="rtl"] #progress{transform-origin:right}
 @media (max-width:960px){
   .hero{padding-block:130px 70px;min-height:0}
   .hero-grid{grid-template-columns:1fr;gap:56px}
-  .photo-zone{order:-1;max-width:500px;margin-inline:auto;padding:88px 56px 80px}
+  .photo-zone{order:-1;max-width:500px;margin-inline:auto;padding:6px 40px}
   .zm1{display:none}
   .pipe-grid{grid-template-columns:1fr}
   .pipe{padding-block:2px}
@@ -451,12 +445,10 @@ html[dir="rtl"] #progress{transform-origin:right}
   .nbtn{padding:8px}
   .nbtn span{display:none}
   .xp-row{grid-template-columns:1fr}
-  .zm1,.zm2,.f-as{display:none}
-  .ring{width:84px;height:84px;top:0;left:0}
-  .f-da{top:6px;right:0}
-  .f-so{bottom:6px;left:0}
-  .f-is{bottom:6px;right:0}
-  .photo-zone{padding:64px 18px 70px}
+  .zm1,.zm2{display:none}
+  .ring{width:72px;height:72px;top:-14px;left:-14px}
+  .photo-zone{padding:6px 14px}
+  .zone-band{gap:10px}
   .stats{grid-template-columns:1fr}
   .mail{font-size:var(--s3)}
   .railbar{flex-wrap:wrap}
@@ -677,27 +669,32 @@ html[dir="rtl"] #progress{transform-origin:right}
       </div>
 
       <div class="photo-zone">
+        <div class="zone-band">
+          <span class="ftitle f-as sticker"><span class="e">Automation Strategist</span><span class="a">استراتيجي الأتمتة</span></span>
+          <span class="ftitle f-da sticker"><span class="e">Decision Architect</span><span class="a">مهندس القرار</span></span>
+        </div>
+
         <figure class="photo">
           <span class="tape t1" aria-hidden="true"></span>
           <span class="tape t2" aria-hidden="true"></span>
           <img src="ahmed-portrait.jpg" alt="Portrait of Ahmed Galal Abdelhai" width="480" height="600" loading="eager" decoding="async"
                onerror="window.__pi=(window.__pi||0)+1;var c=['ahmed-portrait.jpeg','ahmed-portrait.png','ahmed-portrait.webp','portrait.jpg','photo.jpg'];if(window.__pi<=c.length){this.src=c[window.__pi-1]}else{this.closest('.photo').classList.add('noimg')}">
           <span class="fallback" aria-hidden="true"><b>AG</b></span>
+
+          <span class="pin ring" aria-hidden="true">
+            <svg viewBox="0 0 84 84">
+              <defs><path id="ringPath" d="M42,42 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"/></defs>
+              <circle cx="42" cy="42" r="18" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
+              <text x="42" y="47" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="900" fill="#0E0B03">AG</text>
+              <text class="rtxt"><textPath href="#ringPath">DATA · INTELLIGENCE · SYSTEMS · DECISIONS ·</textPath></text>
+            </svg>
+          </span>
         </figure>
 
-        <span class="pin ring" aria-hidden="true">
-          <svg viewBox="0 0 96 96">
-            <defs><path id="ringPath" d="M48,48 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
-            <circle cx="48" cy="48" r="20" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
-            <text x="48" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="900" fill="#0E0B03">AG</text>
-            <text class="rtxt"><textPath href="#ringPath">DATA · INTELLIGENCE · SYSTEMS · DECISIONS ·</textPath></text>
-          </svg>
-        </span>
-
-        <span class="ftitle f-da sticker"><span class="e">Decision Architect</span><span class="a">مهندس القرار</span></span>
-        <span class="ftitle f-as sticker"><span class="e">Automation Strategist</span><span class="a">استراتيجي الأتمتة</span></span>
-        <span class="ftitle f-so sticker"><span class="e">Systems Orchestrator</span><span class="a">منظّم الأنظمة</span></span>
-        <span class="ftitle f-is sticker"><span class="e">Insight Synthesizer</span><span class="a">صانع الرؤى</span></span>
+        <div class="zone-band">
+          <span class="ftitle f-so sticker"><span class="e">Systems Orchestrator</span><span class="a">منظّم الأنظمة</span></span>
+          <span class="ftitle f-is sticker"><span class="e">Insight Synthesizer</span><span class="a">صانع الرؤى</span></span>
+        </div>
 
         <span class="medal zm1" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-linechart" stroke="#0E0B03"/></svg></span>
         <span class="medal zm2" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-gear" stroke="#0E0B03"/></svg></span>
@@ -1476,7 +1473,7 @@ const onScroll=()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=fal
 addEventListener('scroll',onScroll,{passive:true});onScroll();
 toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 
-/* 5 — scroll-spy: last section whose top crossed the 40% viewport line (always matches reality) */
+/* 5 — scroll-spy: geometry-based, always matches where you are */
 const links=$$('.navl a[href^="#"], .mnav a[href^="#"]');
 const spySecs=[...new Set(links.map(a=>document.querySelector(a.hash)).filter(Boolean))]
   .sort((a,b)=>a.offsetTop-b.offsetTop);
