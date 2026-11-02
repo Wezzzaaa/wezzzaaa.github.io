@@ -1755,6 +1755,15 @@ function buildGallery(fig,srcs){
   const card=fig.closest('.card'),cap=fig.querySelector('figcaption');
   const alt=cap?cap.textContent.trim():'';
   const g=document.createElement('div');g.className='gallery';
+  /* Size the box to the first image's real proportions (not a one-size-fits-all
+     16:10 crop) so a dense, tall dashboard screenshot renders at full legible
+     size instead of being letterboxed/squeezed. Clamped to sane bounds so a
+     stray outlier file can't break the card layout. */
+  const first=srcs[0];
+  if(first&&first.w&&first.h){
+    const ratio=Math.max(0.95,Math.min(2.0,first.w/first.h));
+    g.style.aspectRatio=ratio.toFixed(4);
+  }
   const track=document.createElement('div');track.className='g-track';
   srcs.forEach((s,i)=>{
     const sl=document.createElement('div');sl.className='g-slide';
@@ -1764,7 +1773,20 @@ function buildGallery(fig,srcs){
     sl.appendChild(im);track.appendChild(sl);
   });
   g.appendChild(track);
+  let idx=0;
+  const gGo=i=>{
+    idx=(i+srcs.length)%srcs.length;
+    track.style.transform='translateX('+(-idx*100)+'%)';
+    g.dataset.idx=idx;
+    if(dotEls)dotEls.forEach((d,j)=>d.setAttribute('aria-current',String(j===idx)));
+    if(cnt)cnt.textContent=(idx+1)+' / '+srcs.length;
+  };
+  let dotEls=null,cnt=null;
   if(srcs.length>1){
+    /* Nav arrows and dots are plain siblings of `track`, appended straight to
+       `g` — never descendants of the element that owns the swipe gesture, so a
+       tap on them cannot be intercepted, re-targeted, or swallowed by pointer
+       capture. This is a structural guarantee, not a guard clause. */
     const mk=(cls,lbE,lbA)=>{const b=document.createElement('button');
       b.type='button';b.className='g-nav '+cls;
       b.setAttribute('aria-label',AR()?lbA:lbE);
@@ -1772,47 +1794,62 @@ function buildGallery(fig,srcs){
       b.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg>';return b};
     const pv=mk('prev','Previous image','الصورة السابقة');
     const nx=mk('next','Next image','الصورة التالية');
+    pv.addEventListener('click',()=>gGo(idx-1));
+    nx.addEventListener('click',()=>gGo(idx+1));
     g.appendChild(pv);g.appendChild(nx);
+
     const dots=document.createElement('div');dots.className='g-dots';dots.setAttribute('aria-hidden','true');
-    srcs.forEach((_,i)=>{const d=document.createElement('button');
+    dotEls=srcs.map((_,i)=>{
+      const d=document.createElement('button');
       d.type='button';if(i===0)d.setAttribute('aria-current','true');
-      d.addEventListener('click',e=>{e.stopPropagation();gGo(i)});dots.appendChild(d)});
+      d.addEventListener('click',()=>gGo(i));
+      dots.appendChild(d);return d;
+    });
     g.appendChild(dots);
-    const cnt=document.createElement('span');cnt.className='g-count';
-    g.appendChild(cnt);
-    let idx=0;
-    const gGo=i=>{idx=(i+srcs.length)%srcs.length;
-      track.style.transform='translateX('+(-idx*100)+'%)';
-      dots.querySelectorAll('button').forEach((d,j)=>d.setAttribute('aria-current',String(j===idx)));
-      cnt.textContent=(idx+1)+' / '+srcs.length;
-      g.dataset.idx=idx};
-    pv.addEventListener('click',e=>{e.stopPropagation();gGo(idx-1)});
-    nx.addEventListener('click',e=>{e.stopPropagation();gGo(idx+1)});
+
+    cnt=document.createElement('span');cnt.className='g-count';
     cnt.textContent='1 / '+srcs.length;
-    let sp=false,sx0=0,dx0=0;
-    g.addEventListener('pointerdown',e=>{
-      if(e.target.closest('button'))return; /* never hijack nav/dot buttons: let them click natively */
+    g.appendChild(cnt);
+    g.dataset.idx=0;
+
+    /* Swipe-to-browse and tap-to-zoom both live on `track` only — the one
+       element that actually contains the images — so pointer capture can
+       never reach outside it. A real swipe sets `dragged`, which the click
+       handler checks to skip opening the lightbox right after a drag. */
+    let sp=false,sx0=0,dx0=0,dragged=false;
+    track.addEventListener('pointerdown',e=>{
       if(e.pointerType==='mouse'&&e.button!==0)return;
       sp=true;sx0=e.clientX;dx0=0;track.classList.add('live');
-      g.setPointerCapture(e.pointerId);e.stopPropagation();
+      track.setPointerCapture(e.pointerId);
     });
-    g.addEventListener('pointermove',e=>{
+    track.addEventListener('pointermove',e=>{
       if(!sp)return;dx0=e.clientX-sx0;
       track.style.transform='translateX(calc('+(-idx*100)+'% + '+dx0+'px))';
     });
-    const end=e=>{if(!sp)return;sp=false;track.classList.remove('live');
-      const w=g.getBoundingClientRect().width;
-      if(Math.abs(dx0)>w*0.15)gGo(idx+(dx0<0?1:-1));else gGo(idx)};
-    g.addEventListener('pointerup',end);g.addEventListener('pointercancel',end);
+    const endDrag=()=>{
+      if(!sp)return;sp=false;track.classList.remove('live');
+      const w=g.getBoundingClientRect().width||1;
+      if(Math.abs(dx0)>w*0.15){dragged=true;gGo(idx+(dx0<0?1:-1));}
+      else{dragged=false;gGo(idx);}
+    };
+    track.addEventListener('pointerup',endDrag);
+    track.addEventListener('pointercancel',endDrag);
+    track.addEventListener('click',()=>{
+      if(dragged){dragged=false;return;}
+      openLBGallery(g,card);
+    });
+  }else{
+    /* Single image: no nav chrome, nothing to swipe between — the whole
+       track just opens the lightbox on tap, as simply as possible. */
+    track.addEventListener('click',()=>openLBGallery(g,card));
   }
-  g.addEventListener('click',e=>{if(e.target.closest('button'))return;openLBGallery(g,card)});
   fig.insertBefore(g,figb);
   figb.style.display='none';
 }
 
 /* 10 — ZOOM LIGHTBOX (photos + vectors) */
 const lb=$('#lightbox'),lbStage=$('#lbStage'),lbCanvas=$('#lbCanvas'),
-      lbT=$('#lb-t'),lbCapTxt=$('#lbCap .cap-txt'),zVal=$('#zVal'),
+      lbT=$('#lb-t'),lbCapTxt=$('#lbCap'),zVal=$('#zVal'),
       zPrev=$('#zPrev'),zNext=$('#zNext'),zIdx=$('#zIdx');
 let z=1,px=0,py=0,lbLast=null,lbCard=null,lbGal=null,lbIdx=0,lbOpen=false;
 const clampZ=v=>Math.min(6,Math.max(1,v));
