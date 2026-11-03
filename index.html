@@ -330,7 +330,7 @@ html[dir="rtl"] .rbtn.next svg{transform:scaleX(-1)}
 @keyframes nudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-14px)}60%{transform:translateX(8px)}}
 html[dir="rtl"] .rail.nudge{animation-name:nudge-rtl}
 @keyframes nudge-rtl{0%,100%{transform:translateX(0)}30%{transform:translateX(14px)}60%{transform:translateX(-8px)}}
-.rail>*{flex:0 0 min(450px,86vw);scroll-snap-align:start}
+.rail>*{flex:0 0 min(760px,90vw);scroll-snap-align:start}
 .rail::-webkit-scrollbar{height:10px}
 .rail::-webkit-scrollbar-track{background:var(--paper2);border:2px solid var(--ink);border-radius:999px}
 .rail::-webkit-scrollbar-thumb{background:var(--ink);border-radius:999px;border:2px solid var(--paper2)}
@@ -355,9 +355,11 @@ figcaption{padding:9px 14px;font-size:var(--s7);color:var(--mut);font-weight:600
 .card h3{font-size:var(--s3);font-weight:900;text-transform:uppercase;line-height:1.15}
 .outcome{font-size:var(--s4);font-weight:900;line-height:1.35}
 .ctx{color:var(--mut);font-size:var(--s6);line-height:1.7}
+.card .ctx{max-width:62ch} /* card grew wider for the visual; keep prose at a comfortable reading measure */
 .mini{font-size:var(--s7);font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
 .card ul,.cs ul{display:grid;gap:8px}
 .card li,.cs li{position:relative;padding-inline-start:20px;color:var(--mut);font-size:var(--s6);line-height:1.65}
+.card li{max-width:62ch} /* same reading-measure guard, scoped to the rail card only — dialog list untouched */
 .card li::before,.cs li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:9px;height:9px;background:var(--yel);border:2px solid var(--mk);border-radius:3px}
 .cs ul{margin-top:12px}
 .tools{display:flex;flex-wrap:wrap;gap:7px}
@@ -1719,6 +1721,13 @@ rail.addEventListener('keydown',e=>{
 let dn=false,sx=0,sl=0,moved=0;
 rail.addEventListener('pointerdown',e=>{
   if(e.pointerType!=='mouse')return;
+  /* A card's own photo gallery (buttons, dots, swipe track) already owns its
+     gesture end-to-end — the outer rail must never also claim the pointer for
+     it. Without this, #rail's own setPointerCapture on every pointerdown
+     inside it (including ones that land squarely on a nested nav button)
+     steals the gesture from the button one level down, which is exactly the
+     capture-vs-click flakiness already fixed inside the gallery itself. */
+  if(e.target.closest('button, .gallery'))return;
   dn=true;moved=0;sx=e.clientX;sl=rail.scrollLeft;
   rail.classList.add('dragging');rail.setPointerCapture(e.pointerId);
 });
