@@ -330,7 +330,7 @@ html[dir="rtl"] .rbtn.next svg{transform:scaleX(-1)}
 @keyframes nudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-14px)}60%{transform:translateX(8px)}}
 html[dir="rtl"] .rail.nudge{animation-name:nudge-rtl}
 @keyframes nudge-rtl{0%,100%{transform:translateX(0)}30%{transform:translateX(14px)}60%{transform:translateX(-8px)}}
-.rail>*{flex:0 0 min(760px,90vw);scroll-snap-align:start}
+.rail>*{flex:0 0 min(1040px,94vw);scroll-snap-align:start}
 .rail::-webkit-scrollbar{height:10px}
 .rail::-webkit-scrollbar-track{background:var(--paper2);border:2px solid var(--ink);border-radius:999px}
 .rail::-webkit-scrollbar-thumb{background:var(--ink);border-radius:999px;border:2px solid var(--paper2)}
@@ -411,15 +411,20 @@ html[dir="rtl"] .g-nav.next .ic{transform:scaleX(-1)}
 #toTop:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shad)}
 
 /* ===== ZOOM LIGHTBOX ===== */
-.lb{border:2px solid var(--ink);border-radius:20px;box-shadow:calc(var(--sx) * 2) 10px 0 var(--shad);padding:0;width:min(1100px,96vw);background:var(--paper);color:var(--ink)}
+.lb{border:2px solid var(--ink);border-radius:20px;box-shadow:calc(var(--sx) * 2) 10px 0 var(--shad);padding:0;width:min(1100px,96vw);height:min(80vh,760px);background:var(--paper);color:var(--ink);display:flex;flex-direction:column}
 .lb:not([open]){display:none}
+/* True fullscreen: the dialog takes the whole viewport; the flex column below
+   (bar / stage / caption) reflows automatically since the stage is flex:1 —
+   no hardcoded height math needed for either state. */
+.lb:fullscreen,.lb:-webkit-full-screen{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border-width:0}
 .lb::backdrop{background:rgba(0,0,0,.72)}
-.lb-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-block-end:2px solid var(--ink)}
+.lb-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-block-end:2px solid var(--ink);flex:none}
 .lb-title{font-weight:900;font-size:var(--s6);text-transform:uppercase;letter-spacing:.04em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lb-ctl{display:flex;align-items:center;gap:8px;flex:none}
 .zbtn{width:38px;height:38px;display:grid;place-items:center;background:var(--paper2);color:var(--ink);border:2px solid var(--ink);border-radius:10px;cursor:pointer;box-shadow:2px 2px 0 var(--shad);transition:background-color .2s ease,color .2s ease,transform .15s ease;padding:0}
 .zbtn:hover{background:var(--yel);color:var(--mk);border-color:var(--mk)}
 .zbtn:active{transform:translate(calc(var(--l2)*-1),2px);box-shadow:none}
+.zbtn[aria-pressed="true"]{background:var(--yel);color:var(--mk);border-color:var(--mk)}
 .zbtn .ic{width:16px;height:16px}
 .zbtn.prev .ic{transform:scaleX(-1)}
 html[dir="rtl"] .zbtn.prev .ic{transform:none}
@@ -428,13 +433,17 @@ html[dir="rtl"] .zbtn.next .ic{transform:scaleX(-1)}
 .zidx{min-width:64px;text-align:center;font-weight:900;font-size:var(--s7);direction:ltr}
 .lb.gal .znav{display:grid}
 .znav{display:none}
-.lb-stage{position:relative;height:min(62vh,620px);overflow:hidden;background:var(--paper);cursor:grab;touch-action:none}
+.lb-stage{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--paper);cursor:grab;touch-action:none}
 .lb-stage.panning{cursor:grabbing}
-.lb-canvas{position:absolute;inset:0;display:grid;place-items:center;transform-origin:center center;transition:transform .18s ease}
+/* Flexbox, not grid: a single auto-sized grid track does not fill its
+   container, so place-items:center only centers content within that
+   collapsed track (anchored top-left) rather than within the stage itself.
+   Flex's align-items/justify-content correctly center within the full box. */
+.lb-canvas{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-origin:center center;transition:transform .18s ease}
 .lb-stage.dragging .lb-canvas{transition:none}
-.lb-canvas svg{width:min(920px,92%);height:auto;max-height:56vh;display:block;pointer-events:none}
-.lb-canvas img.lb-img{max-width:min(1000px,94%);max-height:56vh;width:auto;height:auto;display:block;pointer-events:none}
-.lb-cap{padding:10px 16px;border-block-start:2px solid var(--ink);font-size:var(--s7);color:var(--mut);font-weight:600;background:var(--paper2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.lb-canvas svg{max-width:92%;max-height:92%;width:auto;height:auto;display:block;pointer-events:none}
+.lb-canvas img.lb-img{max-width:94%;max-height:94%;width:auto;height:auto;display:block;pointer-events:none}
+.lb-cap{padding:10px 16px;border-block-start:2px solid var(--ink);font-size:var(--s7);color:var(--mut);font-weight:600;background:var(--paper2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex:none}
 .lb-cap .cap-txt{min-width:0}
 
 /* ===== EXPERIENCE ===== */
@@ -583,6 +592,7 @@ html[dir="rtl"] #progress{transform-origin:right}
   <symbol id="i-zin" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M21 21l-5.2-5.2M10.5 7.5v6M7.5 10.5h6"/></symbol>
   <symbol id="i-zout" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M21 21l-5.2-5.2M7.5 10.5h6"/></symbol>
   <symbol id="i-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-compress" viewBox="0 0 24 24"><path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M4 15h3a2 2 0 0 1 2 2v3M15 20v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="i-pie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12V3a9 9 0 0 1 7.8 13.5Z" fill="#F1CB1C" stroke-width="2" stroke-linejoin="round"/></symbol>
   <symbol id="i-scatter" viewBox="0 0 24 24"><path d="M4 4v16h16"/><circle cx="9" cy="13" r="1.5"/><circle cx="13" cy="8.5" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/><circle cx="18.5" cy="6.5" r="1.5"/></symbol>
   <symbol id="i-linechart" viewBox="0 0 24 24"><path d="M3 4v16h17"/><path d="M6 15l4-5 3 3 5-7"/></symbol>
@@ -1447,7 +1457,10 @@ html[dir="rtl"] #progress{transform-origin:right}
       <button class="zbtn" id="zOut" type="button" data-ae="Zoom out" data-aa="تصغير" aria-label="Zoom out"><svg class="ic" aria-hidden="true"><use href="#i-zout"/></svg></button>
       <span class="zval" id="zVal" aria-live="polite">100%</span>
       <button class="zbtn" id="zIn" type="button" data-ae="Zoom in" data-aa="تكبير" aria-label="Zoom in"><svg class="ic" aria-hidden="true"><use href="#i-zin"/></svg></button>
-      <button class="zbtn" id="zFit" type="button" data-ae="Reset zoom" data-aa="إعادة الضبط" aria-label="Reset zoom"><svg class="ic" aria-hidden="true"><use href="#i-fit"/></svg></button>
+      <button class="zbtn" id="zFit" type="button" data-ae="Fullscreen" data-aa="ملء الشاشة" aria-label="Fullscreen" aria-pressed="false">
+        <svg class="ic ic-enter" aria-hidden="true"><use href="#i-fit"/></svg>
+        <svg class="ic ic-exit" aria-hidden="true" style="display:none"><use href="#i-compress"/></svg>
+      </button>
       <button class="zbtn" id="lbClose" type="button" data-ae="Close" data-aa="إغلاق" aria-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
     </div>
   </div>
@@ -1572,433 +1585,627 @@ html[dir="rtl"] #progress{transform-origin:right}
 
 <script>
 (()=>{"use strict";
-const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+/* =====================================================================
+   Ahmed Galal Abdelhai — portfolio behavior
+   Structure: a small set of shared, stateless utilities at the top, then
+   one init*() function per feature, each self-contained unless it has a
+   genuine, explicit dependency on another feature (declared as a function
+   parameter, never an implicit shared variable). Bootstrapped in order at
+   the bottom.
+
+   The only two real cross-feature dependencies in this page are:
+     1. Language toggling needs to know if the photo lightbox is currently
+        open (to refresh its caption text) — handled via a small bridge
+        object returned by initGalleriesAndLightbox() and passed into
+        initLanguage().
+     2. The reveal-on-scroll system and the scroll-progress bar share the
+        same "still waiting to reveal" list — handled by merging them into
+        one function, since they are one feature split across two concerns.
+   Both are deliberate and minimal; everything else is fully self-contained.
+   ===================================================================== */
+
+/* ---------- Shared utilities ---------- */
+const $=(s,c=document)=>c.querySelector(s);
+const $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const AR=()=>document.documentElement.lang==='ar';
-
-/* 0 — THEME */
-const toastEl=$('#toast');let tt;
-function showToast(msg,dur){toastEl.textContent=msg;toastEl.classList.add('show');
-  clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),dur||2200)}
-const tb=$('#themeBtn'),tm=document.querySelector('meta[name="theme-color"]');
-function applyTheme(dark){
-  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
-  tb.setAttribute('aria-pressed',String(dark));
-  tb.querySelector('.imoon').style.display=dark?'none':'';
-  tb.querySelector('.isun').style.display=dark?'':'none';
-  if(tm)tm.setAttribute('content',dark?'#14120C':'#FAF8F1');
-}
-applyTheme(document.documentElement.getAttribute('data-theme')==='dark');
-tb.addEventListener('click',()=>{
-  const dark=document.documentElement.getAttribute('data-theme')!=='dark';
-  applyTheme(dark);
-  try{localStorage.setItem('ag-theme',dark?'dark':'light')}catch(e){}
-  showToast(dark?(AR()?'الوضع الداكن':'Dark mode on'):(AR()?'الوضع الفاتح':'Light mode on'));
-});
-
-/* 1 — MOTION */
-const mb=$('#motionBtn');
-function applyMotion(off){
-  document.body.classList.toggle('motion-off',off);
-  mb.setAttribute('aria-pressed',String(off));
-  mb.querySelector('.ip').style.display=off?'none':'';
-  mb.querySelector('.iy').style.display=off?'':'none';
-}
-let motionOff=document.body.classList.contains('motion-off');
-applyMotion(motionOff);
-mb.addEventListener('click',()=>{
-  motionOff=!motionOff;applyMotion(motionOff);
-  try{localStorage.setItem('ag-motion',motionOff?'off':'on')}catch(e){}
-  showToast(motionOff?(AR()?'تم إيقاف الحركة':'Animations paused'):(AR()?'تم تشغيل الحركة':'Animations on'));
-});
-try{
-  if(!localStorage.getItem('ag-motion')&&matchMedia('(prefers-reduced-motion: reduce)').matches){
-    setTimeout(()=>showToast(AR()
-      ?'الحركة مفعّلة هنا — استخدم زر "الحركة" لإيقافها'
-      :'Animations are on — use the Motion button to pause',3400),900);
-  }
-}catch(e){}
-
-/* 2 — LANGUAGE */
+const RM=()=>document.body.classList.contains('motion-off');
 const MAIN_T=()=>AR()?'Ahmed Galal Abdelhai — محلل بيانات ومهندس برمجيات'
   :'Ahmed Galal Abdelhai — Data Analyst & Software Engineer';
-function setLang(l){const h=document.documentElement;h.lang=l;h.dir=l==='ar'?'rtl':'ltr';
-  const od=document.querySelector('dialog[open]');
-  if(od===lb&&lbOpen){refreshLBTexts()}
-  else if(od&&od.classList.contains('cs')){
-    document.title=od.dataset[l==='ar'?'titleAr':'titleEn']||MAIN_T();
-  }else document.title=MAIN_T();
-  $$('[data-ae]').forEach(el=>el.setAttribute('aria-label',l==='ar'?(el.dataset.aa||el.dataset.ae):(el.dataset.ae||el.dataset.aa)));
-  const lbB=$('#langBtn');if(lbB)lbB.setAttribute('aria-pressed',String(l==='ar'));
-  try{localStorage.setItem('ag-lang',l)}catch(e){}}
-if(document.documentElement.lang==='ar')setLang('ar');
- $('#langBtn').addEventListener('click',()=>setLang(AR()?'en':'ar'));
 
-/* 3 — REVEALS */
-const sweep=()=>$$('[data-reveal]').forEach(el=>{
-  if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('rv')});
-sweep();
-let unrevealed=$$('[data-reveal]:not(.rv)');
-if('IntersectionObserver'in window){
+const toastEl=$('#toast');
+let toastTimer;
+function showToast(msg,dur){
+  toastEl.textContent=msg;toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.classList.remove('show'),dur||2200);
+}
+
+/* ---------- Theme (light/dark) ---------- */
+function initTheme(){
+  const btn=$('#themeBtn'),meta=document.querySelector('meta[name="theme-color"]');
+  function apply(dark){
+    document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+    btn.setAttribute('aria-pressed',String(dark));
+    btn.querySelector('.imoon').style.display=dark?'none':'';
+    btn.querySelector('.isun').style.display=dark?'':'none';
+    if(meta)meta.setAttribute('content',dark?'#14120C':'#FAF8F1');
+  }
+  apply(document.documentElement.getAttribute('data-theme')==='dark');
+  btn.addEventListener('click',()=>{
+    const dark=document.documentElement.getAttribute('data-theme')!=='dark';
+    apply(dark);
+    try{localStorage.setItem('ag-theme',dark?'dark':'light')}catch(e){}
+    showToast(dark?(AR()?'الوضع الداكن':'Dark mode on'):(AR()?'الوضع الفاتح':'Light mode on'));
+  });
+}
+
+/* ---------- Motion (reduce animation) ---------- */
+function initMotion(){
+  const btn=$('#motionBtn');
+  let off=document.body.classList.contains('motion-off');
+  function apply(v){
+    document.body.classList.toggle('motion-off',v);
+    btn.setAttribute('aria-pressed',String(v));
+    btn.querySelector('.ip').style.display=v?'none':'';
+    btn.querySelector('.iy').style.display=v?'':'none';
+  }
+  apply(off);
+  btn.addEventListener('click',()=>{
+    off=!off;apply(off);
+    try{localStorage.setItem('ag-motion',off?'off':'on')}catch(e){}
+    showToast(off?(AR()?'تم إيقاف الحركة':'Animations paused'):(AR()?'تم تشغيل الحركة':'Animations on'));
+  });
   try{
-    const io=new IntersectionObserver(es=>{es.forEach(e=>{
-      if(e.isIntersecting){e.target.classList.add('rv');io.unobserve(e.target)}})},
-      {threshold:.08,rootMargin:'0px 0px -5% 0px'});
-    unrevealed.forEach(el=>io.observe(el));
-  }catch(e){unrevealed.forEach(el=>el.classList.add('rv'))}
-}else{$$('[data-reveal]').forEach(el=>el.classList.add('rv'))}
-
-/* 4 — COUNT-UPS */
-const RM=()=>document.body.classList.contains('motion-off');
-const fmt=(v,d)=>d?v.toFixed(d):Math.round(v).toLocaleString('en-US');
- $$('[data-count]').forEach(el=>{
-  const t=parseFloat(el.dataset.count),d=parseInt(el.dataset.decimals||'0',10),
-        suf=el.dataset.suffix||'',pre=el.dataset.prefix||'';
-  const run=()=>{if(RM())return;const t0=performance.now(),dur=1100;
-    const step=n=>{const p=Math.min(1,(n-t0)/dur),e=1-Math.pow(1-p,3);
-      el.textContent=pre+fmt(t*e,d)+suf;if(p<1)requestAnimationFrame(step)};
-    requestAnimationFrame(step)};
-  if('IntersectionObserver'in window){
-    const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){run();o.disconnect()}},{threshold:.4});
-    o.observe(el)}else run();
-});
-
-/* 5 — PROGRESS + BACK-TO-TOP */
-const bar=$('#progress'),toTop=$('#toTop');
-let tick=false;
-const onScroll=()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;
-  const h=document.documentElement,max=h.scrollHeight-innerHeight;
-  if(bar)bar.style.transform='scaleX('+(max>0?scrollY/max:0)+')';
-  toTop.classList.toggle('show',scrollY>600);
-  if(unrevealed.length){
-    unrevealed=unrevealed.filter(el=>{
-      if(el.getBoundingClientRect().top<innerHeight*.95){el.classList.add('rv');return false}
-      return true});
-  }
-})};
-addEventListener('scroll',onScroll,{passive:true});onScroll();
-toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
-
-/* 6 — SCROLL-SPY */
-const links=$$('.navl a[href^="#"], .mnav a[href^="#"]');
-const spySecs=[...new Set(links.map(a=>document.querySelector(a.hash)).filter(Boolean))]
-  .sort((a,b)=>a.offsetTop-b.offsetTop);
-let spyTick=false;
-const spy=()=>{spyTick=false;
-  const line=scrollY+innerHeight*0.4;let cur=null;
-  for(const s of spySecs){if(s.offsetTop<=line)cur=s}
-  links.forEach(a=>a.removeAttribute('aria-current'));
-  if(cur)links.filter(l=>l.hash==='#'+cur.id)
-    .forEach(a=>a.setAttribute('aria-current','true'));
-};
-const onSpy=()=>{if(!spyTick){spyTick=true;requestAnimationFrame(spy)}};
-addEventListener('scroll',onSpy,{passive:true});
-addEventListener('resize',onSpy);
-addEventListener('load',spy);spy();
-
-/* 7 — MOBILE MENU */
-const pn=$('#pillnav'),bg=$('#burger');
-bg.addEventListener('click',()=>{bg.setAttribute('aria-expanded',String(pn.classList.toggle('open')))});
- $$('#mnav a').forEach(a=>a.addEventListener('click',()=>{pn.classList.remove('open');bg.setAttribute('aria-expanded','false')}));
-
-/* 8 — PROJECT RAIL */
-const rail=$('#rail');
-rail.addEventListener('transitionend',()=>{
-  if(rail.classList.contains('rv')&&!rail.dataset.nudged){
-    rail.dataset.nudged='1';
-    if(!RM())rail.classList.add('nudge');
-    setTimeout(()=>rail.classList.remove('nudge'),1000);
-  }
-},{once:false});
-const step=()=>{const c=rail.firstElementChild;return c?c.getBoundingClientRect().width+24:420};
-const go=d=>{const r=document.documentElement.dir==='rtl'?-1:1;
-  rail.scrollBy({left:d*step()*r,behavior:RM()?'auto':'smooth'})};
- $('#rPrev').addEventListener('click',()=>go(-1));
- $('#rNext').addEventListener('click',()=>go(1));
-rail.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'){e.preventDefault();go(document.documentElement.dir==='rtl'?-1:1)}
-  if(e.key==='ArrowLeft'){e.preventDefault();go(document.documentElement.dir==='rtl'?1:-1)}
-});
-let dn=false,sx=0,sl=0,moved=0;
-rail.addEventListener('pointerdown',e=>{
-  if(e.pointerType!=='mouse')return;
-  /* A card's own photo gallery (buttons, dots, swipe track) already owns its
-     gesture end-to-end — the outer rail must never also claim the pointer for
-     it. Without this, #rail's own setPointerCapture on every pointerdown
-     inside it (including ones that land squarely on a nested nav button)
-     steals the gesture from the button one level down, which is exactly the
-     capture-vs-click flakiness already fixed inside the gallery itself. */
-  if(e.target.closest('button, .gallery'))return;
-  dn=true;moved=0;sx=e.clientX;sl=rail.scrollLeft;
-  rail.classList.add('dragging');rail.setPointerCapture(e.pointerId);
-});
-rail.addEventListener('pointermove',e=>{
-  if(!dn)return;
-  const dx=e.clientX-sx;moved=Math.max(moved,Math.abs(dx));
-  rail.scrollLeft=sl-dx;
-});
-['pointerup','pointercancel'].forEach(t=>rail.addEventListener(t,()=>{dn=false;rail.classList.remove('dragging')}));
-rail.addEventListener('click',e=>{if(moved>8){e.preventDefault();e.stopPropagation();moved=0}},true);
-
-/* 9 — IMAGE LOADER: load EXACT repo filenames as declared in data-imgs (no extension
-   guessing — filenames in this repo have spaces/irregular casing, e.g. "Customer
-   Segments 4.png", so the loader must not derive a name, only verify it loads).
-   This works for any mix of .png / .jpg / .jpeg / .webp since nothing is inferred. */
-function tryLoad(fname){
-  return new Promise(res=>{
-    const im=new Image();
-    im.onload=()=>res({src:im.src,w:im.naturalWidth,h:im.naturalHeight});
-    im.onerror=()=>res(null);
-    im.src=encodeURI(fname);
-  });
+    if(!localStorage.getItem('ag-motion')&&matchMedia('(prefers-reduced-motion: reduce)').matches){
+      setTimeout(()=>showToast(AR()
+        ?'الحركة مفعّلة هنا — استخدم زر "الحركة" لإيقافها'
+        :'Animations are on — use the Motion button to pause',3400),900);
+    }
+  }catch(e){}
 }
-$$('.fig[data-imgs]').forEach(fig=>{
-  const files=fig.dataset.imgs.split(',').map(s=>s.trim()).filter(Boolean);
-  Promise.all(files.map(tryLoad)).then(results=>{
-    const srcs=results.filter(Boolean);
-    if(!srcs.length)return; /* keep vector fallback if nothing loaded */
-    buildGallery(fig,srcs);
-  });
-});
-function buildGallery(fig,srcs){
-  const figb=fig.querySelector('.figb');if(!figb)return;
-  const card=fig.closest('.card'),cap=fig.querySelector('figcaption');
-  const alt=cap?cap.textContent.trim():'';
-  const g=document.createElement('div');g.className='gallery';
-  /* Size the box to the first image's real proportions (not a one-size-fits-all
-     16:10 crop) so a dense, tall dashboard screenshot renders at full legible
-     size instead of being letterboxed/squeezed. Clamped to sane bounds so a
-     stray outlier file can't break the card layout. */
-  const first=srcs[0];
-  if(first&&first.w&&first.h){
-    const ratio=Math.max(0.95,Math.min(2.0,first.w/first.h));
-    g.style.aspectRatio=ratio.toFixed(4);
+
+/* ---------- Project photo galleries + the shared zoom lightbox ----------
+   Everything that touches a project's photos lives here: loading the real
+   repo image files, building the inline swipeable gallery per card, and the
+   full-screen-capable zoom lightbox both galleries and the vector-only
+   cards open into. Returns a tiny public bridge for the language toggle
+   (see file header) — nothing else outside this function needs access to
+   any of this module's internals. */
+function initGalleriesAndLightbox(){
+  /* -- image loading: exact repo filenames, no extension guessing -- */
+  function tryLoad(fname){
+    return new Promise(res=>{
+      const im=new Image();
+      im.onload=()=>res({src:im.src,w:im.naturalWidth,h:im.naturalHeight});
+      im.onerror=()=>res(null);
+      im.src=encodeURI(fname);
+    });
   }
-  const track=document.createElement('div');track.className='g-track';
-  srcs.forEach((s,i)=>{
-    const sl=document.createElement('div');sl.className='g-slide';
-    const im=document.createElement('img');
-    im.src=s.src;im.alt=alt+' — '+(i+1)+'/'+srcs.length;
-    im.loading='lazy';im.decoding='async';im.draggable=false;
-    sl.appendChild(im);track.appendChild(sl);
-  });
-  g.appendChild(track);
-  let idx=0;
-  const gGo=i=>{
-    idx=(i+srcs.length)%srcs.length;
-    track.style.transform='translateX('+(-idx*100)+'%)';
-    g.dataset.idx=idx;
-    if(dotEls)dotEls.forEach((d,j)=>d.setAttribute('aria-current',String(j===idx)));
-    if(cnt)cnt.textContent=(idx+1)+' / '+srcs.length;
-  };
-  let dotEls=null,cnt=null;
-  if(srcs.length>1){
-    /* Nav arrows and dots are plain siblings of `track`, appended straight to
-       `g` — never descendants of the element that owns the swipe gesture, so a
-       tap on them cannot be intercepted, re-targeted, or swallowed by pointer
-       capture. This is a structural guarantee, not a guard clause. */
-    const mk=(cls,lbE,lbA)=>{const b=document.createElement('button');
-      b.type='button';b.className='g-nav '+cls;
-      b.setAttribute('aria-label',AR()?lbA:lbE);
-      b.dataset.ae=lbE;b.dataset.aa=lbA;
-      b.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg>';return b};
-    const pv=mk('prev','Previous image','الصورة السابقة');
-    const nx=mk('next','Next image','الصورة التالية');
-    pv.addEventListener('click',()=>gGo(idx-1));
-    nx.addEventListener('click',()=>gGo(idx+1));
-    g.appendChild(pv);g.appendChild(nx);
 
-    const dots=document.createElement('div');dots.className='g-dots';dots.setAttribute('aria-hidden','true');
-    dotEls=srcs.map((_,i)=>{
-      const d=document.createElement('button');
-      d.type='button';if(i===0)d.setAttribute('aria-current','true');
-      d.addEventListener('click',()=>gGo(i));
-      dots.appendChild(d);return d;
+  function buildGallery(fig,srcs){
+    const figb=fig.querySelector('.figb');if(!figb)return;
+    const card=fig.closest('.card'),cap=fig.querySelector('figcaption');
+    const alt=cap?cap.textContent.trim():'';
+    const g=document.createElement('div');g.className='gallery';
+    /* Size the box to the first image's real proportions (not a one-size-
+       -fits-all crop) so a dense dashboard screenshot renders at full
+       legible size instead of being letterboxed or squeezed. Clamped so a
+       stray outlier file can't break the card layout. */
+    const first=srcs[0];
+    if(first&&first.w&&first.h){
+      const ratio=Math.max(0.95,Math.min(2.0,first.w/first.h));
+      g.style.aspectRatio=ratio.toFixed(4);
+    }
+    const track=document.createElement('div');track.className='g-track';
+    srcs.forEach((s,i)=>{
+      const sl=document.createElement('div');sl.className='g-slide';
+      const im=document.createElement('img');
+      im.src=s.src;im.alt=alt+' — '+(i+1)+'/'+srcs.length;
+      im.loading='lazy';im.decoding='async';im.draggable=false;
+      sl.appendChild(im);track.appendChild(sl);
     });
-    g.appendChild(dots);
+    g.appendChild(track);
 
-    cnt=document.createElement('span');cnt.className='g-count';
-    cnt.textContent='1 / '+srcs.length;
-    g.appendChild(cnt);
-    g.dataset.idx=0;
-
-    /* Swipe-to-browse and tap-to-zoom both live on `track` only — the one
-       element that actually contains the images — so pointer capture can
-       never reach outside it. A real swipe sets `dragged`, which the click
-       handler checks to skip opening the lightbox right after a drag. */
-    let sp=false,sx0=0,dx0=0,dragged=false;
-    track.addEventListener('pointerdown',e=>{
-      if(e.pointerType==='mouse'&&e.button!==0)return;
-      sp=true;sx0=e.clientX;dx0=0;track.classList.add('live');
-      track.setPointerCapture(e.pointerId);
-    });
-    track.addEventListener('pointermove',e=>{
-      if(!sp)return;dx0=e.clientX-sx0;
-      track.style.transform='translateX(calc('+(-idx*100)+'% + '+dx0+'px))';
-    });
-    const endDrag=()=>{
-      if(!sp)return;sp=false;track.classList.remove('live');
-      const w=g.getBoundingClientRect().width||1;
-      if(Math.abs(dx0)>w*0.15){dragged=true;gGo(idx+(dx0<0?1:-1));}
-      else{dragged=false;gGo(idx);}
+    let idx=0,dotEls=null,cnt=null;
+    const goTo=i=>{
+      idx=(i+srcs.length)%srcs.length;
+      track.style.transform='translateX('+(-idx*100)+'%)';
+      g.dataset.idx=idx;
+      if(dotEls)dotEls.forEach((d,j)=>d.setAttribute('aria-current',String(j===idx)));
+      if(cnt)cnt.textContent=(idx+1)+' / '+srcs.length;
     };
-    track.addEventListener('pointerup',endDrag);
-    track.addEventListener('pointercancel',endDrag);
-    track.addEventListener('click',()=>{
-      if(dragged){dragged=false;return;}
-      openLBGallery(g,card);
-    });
-  }else{
-    /* Single image: no nav chrome, nothing to swipe between — the whole
-       track just opens the lightbox on tap, as simply as possible. */
-    track.addEventListener('click',()=>openLBGallery(g,card));
-  }
-  fig.insertBefore(g,figb);
-  figb.style.display='none';
-}
 
-/* 10 — ZOOM LIGHTBOX (photos + vectors) */
-const lb=$('#lightbox'),lbStage=$('#lbStage'),lbCanvas=$('#lbCanvas'),
-      lbT=$('#lb-t'),lbCapTxt=$('#lbCap'),zVal=$('#zVal'),
-      zPrev=$('#zPrev'),zNext=$('#zNext'),zIdx=$('#zIdx');
-let z=1,px=0,py=0,lbLast=null,lbCard=null,lbGal=null,lbIdx=0,lbOpen=false;
-const clampZ=v=>Math.min(6,Math.max(1,v));
-const clampP=()=>{const m=z-1;px=Math.max(-320*m,Math.min(320*m,px));py=Math.max(-240*m,Math.min(240*m,py))};
-const apply=()=>{clampP();lbCanvas.style.transform='translate('+px+'px,'+py+'px) scale('+z+')';
-  zVal.textContent=Math.round(z*100)+'%'};
-function cardTexts(card){
-  const t=card?card.querySelector('h3'):null;
-  const cEl=card?card.querySelector('figcaption'):null;
+    if(srcs.length>1){
+      /* Nav arrows and dots are plain siblings of `track`, appended
+         straight to `g` — never descendants of the element that owns the
+         swipe gesture, so a tap on them can never be intercepted or
+         re-targeted by pointer capture. Structural guarantee, not a guard
+         clause. The OUTER project rail is told to stay out of this card's
+         gestures too (see initProjectRail) for the same reason. */
+      const mkNav=(cls,lbE,lbA)=>{
+        const b=document.createElement('button');
+        b.type='button';b.className='g-nav '+cls;
+        b.setAttribute('aria-label',AR()?lbA:lbE);
+        b.dataset.ae=lbE;b.dataset.aa=lbA;
+        b.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg>';
+        return b;
+      };
+      const prev=mkNav('prev','Previous image','الصورة السابقة');
+      const next=mkNav('next','Next image','الصورة التالية');
+      prev.addEventListener('click',()=>goTo(idx-1));
+      next.addEventListener('click',()=>goTo(idx+1));
+      g.appendChild(prev);g.appendChild(next);
+
+      const dots=document.createElement('div');
+      dots.className='g-dots';dots.setAttribute('aria-hidden','true');
+      dotEls=srcs.map((_,i)=>{
+        const d=document.createElement('button');
+        d.type='button';if(i===0)d.setAttribute('aria-current','true');
+        d.addEventListener('click',()=>goTo(i));
+        dots.appendChild(d);return d;
+      });
+      g.appendChild(dots);
+
+      cnt=document.createElement('span');cnt.className='g-count';
+      cnt.textContent='1 / '+srcs.length;
+      g.appendChild(cnt);
+      g.dataset.idx=0;
+
+      /* Swipe-to-browse and tap-to-zoom both live on `track` only — the
+         element that actually contains the images. A real swipe sets
+         `dragged`, which the click handler checks to skip opening the
+         lightbox right after a drag. */
+      let dragging=false,startX=0,dx=0,dragged=false;
+      track.addEventListener('pointerdown',e=>{
+        if(e.pointerType==='mouse'&&e.button!==0)return;
+        dragging=true;startX=e.clientX;dx=0;track.classList.add('live');
+        track.setPointerCapture(e.pointerId);
+      });
+      track.addEventListener('pointermove',e=>{
+        if(!dragging)return;dx=e.clientX-startX;
+        track.style.transform='translateX(calc('+(-idx*100)+'% + '+dx+'px))';
+      });
+      const endDrag=()=>{
+        if(!dragging)return;dragging=false;track.classList.remove('live');
+        const w=g.getBoundingClientRect().width||1;
+        if(Math.abs(dx)>w*0.15){dragged=true;goTo(idx+(dx<0?1:-1));}
+        else{dragged=false;goTo(idx);}
+      };
+      track.addEventListener('pointerup',endDrag);
+      track.addEventListener('pointercancel',endDrag);
+      track.addEventListener('click',()=>{
+        if(dragged){dragged=false;return;}
+        openGallery(g,card);
+      });
+    }else{
+      /* Single image: no nav chrome, nothing to swipe between — tap
+         anywhere opens the lightbox. */
+      track.addEventListener('click',()=>openGallery(g,card));
+    }
+    fig.insertBefore(g,figb);
+    figb.style.display='none';
+  }
+
+  $$('.fig[data-imgs]').forEach(fig=>{
+    const files=fig.dataset.imgs.split(',').map(s=>s.trim()).filter(Boolean);
+    Promise.all(files.map(tryLoad)).then(results=>{
+      const srcs=results.filter(Boolean);
+      if(!srcs.length)return; /* keep the vector fallback if nothing loaded */
+      buildGallery(fig,srcs);
+    });
+  });
+
+  /* -- the zoom lightbox itself: vector cards + photo galleries both open into it -- */
+  const lb=$('#lightbox'),lbStage=$('#lbStage'),lbCanvas=$('#lbCanvas'),
+        lbTitle=$('#lb-t'),lbCapTxt=$('#lbCap'),zVal=$('#zVal'),
+        zPrev=$('#zPrev'),zNext=$('#zNext'),zIdx=$('#zIdx'),zFit=$('#zFit');
+
+  let zoom=1,panX=0,panY=0,lastFocused=null,openCard=null,activeGallery=null,galleryIdx=0,lightboxOpen=false;
+
+  const clampZoom=v=>Math.min(6,Math.max(1,v));
+  const clampPan=()=>{
+    const m=zoom-1;
+    panX=Math.max(-320*m,Math.min(320*m,panX));
+    panY=Math.max(-240*m,Math.min(240*m,panY));
+  };
+  const applyTransform=()=>{
+    clampPan();
+    lbCanvas.style.transform='translate('+panX+'px,'+panY+'px) scale('+zoom+')';
+    zVal.textContent=Math.round(zoom*100)+'%';
+  };
+  function cardTexts(card){
+    const h=card?card.querySelector('h3'):null;
+    const capEl=card?card.querySelector('figcaption'):null;
+    return {
+      title: h?(AR()&&h.querySelector('.a')?h.querySelector('.a').textContent:(h.querySelector('.e')||h).textContent):'',
+      caption: capEl?(AR()&&capEl.querySelector('.a')?capEl.querySelector('.a').textContent:(capEl.querySelector('.e')||capEl).textContent):''
+    };
+  }
+  function refreshTexts(){
+    if(!openCard)return;
+    const tx=cardTexts(openCard);
+    lbTitle.textContent=(AR()?'تكبير: ':'Zoom: ')+tx.title;
+    lbCapTxt.textContent=activeGallery&&activeGallery.length>1
+      ?tx.caption+' · '+(galleryIdx+1)+' / '+activeGallery.length
+      :tx.caption;
+  }
+  function setStageContent(node){lbCanvas.innerHTML='';lbCanvas.appendChild(node)}
+
+  function openFromVector(btn){
+    const svg=btn.querySelector('svg.fsvg');if(!svg)return;
+    lastFocused=btn;openCard=btn.closest('.card');activeGallery=null;
+    lb.classList.remove('gal');
+    setStageContent(svg.cloneNode(true));
+    zoom=1;panX=0;panY=0;applyTransform();
+    refreshTexts();
+    lightboxOpen=true;
+    if(typeof lb.showModal==='function')lb.showModal();else lb.setAttribute('open','');
+    document.title=(openCard?cardTexts(openCard).title:'')+(AR()?' — تكبير':' — Zoom')+' | Ahmed Galal Abdelhai';
+  }
+  function showGalleryFrame(){
+    const im=new Image();im.className='lb-img';im.alt='';im.draggable=false;
+    im.src=activeGallery[galleryIdx];
+    setStageContent(im);
+    zoom=1;panX=0;panY=0;applyTransform();
+    zIdx.textContent=(galleryIdx+1)+' / '+activeGallery.length;
+    refreshTexts();
+    const n=activeGallery.length;
+    [galleryIdx+1,galleryIdx-1].forEach(j=>{
+      const preload=new Image();preload.src=activeGallery[((j%n)+n)%n];
+    });
+  }
+  function openGallery(g,card){
+    const track=g.querySelector('.g-track');
+    const imgs=track?[...track.querySelectorAll('img')]:[];
+    if(!imgs.length)return;
+    const startIdx=parseInt(g.dataset.idx||'0',10);
+    lastFocused=g;openCard=card;
+    activeGallery=imgs.map(im=>im.src);
+    lb.classList.add('gal');
+    galleryIdx=startIdx;showGalleryFrame();
+    lightboxOpen=true;
+    if(typeof lb.showModal==='function')lb.showModal();else lb.setAttribute('open','');
+    document.title=cardTexts(card).title+(AR()?' — تكبير':' — Zoom')+' | Ahmed Galal Abdelhai';
+  }
+  function galleryGo(d){
+    if(!activeGallery)return;
+    const n=activeGallery.length;
+    galleryIdx=((galleryIdx+d)%n+n)%n;
+    showGalleryFrame();
+  }
+  function closeLightbox(){
+    if(typeof lb.close==='function')lb.close();else{lb.removeAttribute('open');finish()}
+  }
+  function finish(){
+    lbCanvas.innerHTML='';zoom=1;panX=0;panY=0;
+    activeGallery=null;openCard=null;lightboxOpen=false;
+    document.title=MAIN_T();
+    if(lastFocused){lastFocused.focus();lastFocused=null}
+  }
+
+  $$('.figb').forEach(b=>b.addEventListener('click',()=>openFromVector(b)));
+  $('#zIn').addEventListener('click',()=>{zoom=clampZoom(zoom*1.35);applyTransform()});
+  $('#zOut').addEventListener('click',()=>{zoom=clampZoom(zoom/1.35);applyTransform()});
+  zPrev.addEventListener('click',()=>galleryGo(-1));
+  zNext.addEventListener('click',()=>galleryGo(1));
+  $('#lbClose').addEventListener('click',closeLightbox);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox()});
+  lb.addEventListener('close',finish);
+  lb.addEventListener('keydown',e=>{
+    const k=e.key;
+    if(k==='+'||k==='='){e.preventDefault();zoom=clampZoom(zoom*1.35);applyTransform()}
+    else if(k==='-'||k==='_'){e.preventDefault();zoom=clampZoom(zoom/1.35);applyTransform()}
+    else if(k==='0'){e.preventDefault();zoom=1;panX=0;panY=0;applyTransform()}
+    else if(k.startsWith('Arrow')){
+      e.preventDefault();
+      if(activeGallery&&zoom<=1.01){galleryGo(k==='ArrowRight'?1:-1)}
+      else{
+        const step=40;
+        if(k==='ArrowLeft')panX-=step;if(k==='ArrowRight')panX+=step;
+        if(k==='ArrowUp')panY-=step;if(k==='ArrowDown')panY+=step;
+        applyTransform();
+      }
+    }
+  });
+  lbStage.addEventListener('wheel',e=>{
+    e.preventDefault();
+    zoom=clampZoom(zoom*(e.deltaY<0?1.12:1/1.12));applyTransform();
+  },{passive:false});
+
+  /* pinch + drag-to-pan on the stage */
+  const pointers=new Map();
+  let panning=false,lastX=0,lastY=0,pinchDist=0,pinchZoom=1;
+  lbStage.addEventListener('pointerdown',e=>{
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    lbStage.setPointerCapture(e.pointerId);
+    if(pointers.size===2){
+      const[a,b]=[...pointers.values()];
+      pinchDist=Math.hypot(a.x-b.x,a.y-b.y);pinchZoom=zoom;panning=false;
+      lbStage.classList.add('panning');
+    }else if(pointers.size===1){
+      panning=true;lastX=e.clientX;lastY=e.clientY;
+      lbStage.classList.add('panning');
+    }
+  });
+  lbStage.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===2&&pinchDist>0){
+      const[a,b]=[...pointers.values()];
+      zoom=clampZoom(pinchZoom*Math.hypot(a.x-b.x,a.y-b.y)/pinchDist);applyTransform();
+    }else if(panning&&pointers.size===1){
+      panX+=e.clientX-lastX;panY+=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;applyTransform();
+    }
+  });
+  ['pointerup','pointercancel'].forEach(t=>lbStage.addEventListener(t,e=>{
+    pointers.delete(e.pointerId);
+    if(pointers.size===0){panning=false;lbStage.classList.remove('panning')}
+    if(pointers.size<2)pinchDist=0;
+  }));
+  lbStage.addEventListener('dblclick',()=>{
+    if(zoom>1.01){zoom=1;panX=0;panY=0}else{zoom=2.5}
+    applyTransform();
+  });
+
+  /* -- true fullscreen toggle: the button's corner-bracket icon already
+     means "fullscreen" by convention, so it now actually does that instead
+     of only resetting the zoom level (which, at the default 100%, looked
+     like it did nothing at all). Quick zoom-reset is still available via
+     the "0" key and a double-tap/click on the image, so no capability is
+     lost by repurposing this button. -- */
+  function currentFullscreenElement(){
+    return document.fullscreenElement||document.webkitFullscreenElement||null;
+  }
+  function toggleFullscreen(){
+    if(currentFullscreenElement()===lb){
+      (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    }else{
+      const req=lb.requestFullscreen||lb.webkitRequestFullscreen;
+      if(req)req.call(lb).catch(()=>{});
+    }
+  }
+  function syncFullscreenUI(){
+    const active=currentFullscreenElement()===lb;
+    zFit.setAttribute('aria-pressed',String(active));
+    zFit.querySelector('.ic-enter').style.display=active?'none':'';
+    zFit.querySelector('.ic-exit').style.display=active?'':'none';
+  }
+  zFit.addEventListener('click',toggleFullscreen);
+  document.addEventListener('fullscreenchange',syncFullscreenUI);
+  document.addEventListener('webkitfullscreenchange',syncFullscreenUI);
+
+  /* -- the small public bridge the language toggle needs -- */
   return {
-    t: t?(AR()&&t.querySelector('.a')?t.querySelector('.a').textContent:(t.querySelector('.e')||t).textContent):'',
-    c: cEl?(AR()&&cEl.querySelector('.a')?cEl.querySelector('.a').textContent:(cEl.querySelector('.e')||cEl).textContent):''
+    isOpenFor(dialogEl){return dialogEl===lb&&lightboxOpen},
+    refreshTexts
   };
 }
-function refreshLBTexts(){
-  if(!lbCard)return;
-  const tx=cardTexts(lbCard);
-  lbT.textContent=(AR()?'تكبير: ':'Zoom: ')+tx.t;
-  lbCapTxt.textContent=lbGal&&lbGal.srcs.length>1
-    ?tx.c+' · '+(lbIdx+1)+' / '+lbGal.srcs.length
-    :tx.c;
-}
-function setZoomContent(node){lbCanvas.innerHTML='';lbCanvas.appendChild(node)}
-function openLBSvg(btn){
-  const svg=btn.querySelector('svg.fsvg');if(!svg)return;
-  lbLast=btn;lbCard=btn.closest('.card');lbGal=null;
-  lb.classList.remove('gal');
-  setZoomContent(svg.cloneNode(true));
-  z=1;px=0;py=0;apply();
-  refreshLBTexts();
-  lbOpen=true;
-  if(typeof lb.showModal==='function')lb.showModal();else lb.setAttribute('open','');
-  document.title=(lbCard?cardTexts(lbCard).t:'')+(AR()?' — تكبير':' — Zoom')+' | Ahmed Galal Abdelhai';
-}
-function openLBGallery(g,card){
-  const track=g.querySelector('.g-track');
-  const imgs=track?[...track.querySelectorAll('img')]:[];
-  if(!imgs.length)return;
-  const idx=parseInt(g.dataset.idx||'0',10);
-  lbLast=g;lbCard=card;
-  lbGal={srcs:imgs.map(im=>im.src),idx};
-  lb.classList.add('gal');
-  lbIdx=idx;showGal();
-  lbOpen=true;
-  if(typeof lb.showModal==='function')lb.showModal();else lb.setAttribute('open','');
-  document.title=(cardTexts(card).t)+(AR()?' — تكبير':' — Zoom')+' | Ahmed Galal Abdelhai';
-}
-function showGal(){
-  const im=new Image();im.className='lb-img';im.alt='';im.draggable=false;
-  im.src=lbGal.srcs[lbIdx];
-  setZoomContent(im);
-  z=1;px=0;py=0;apply();
-  zIdx.textContent=(lbIdx+1)+' / '+lbGal.srcs.length;
-  refreshLBTexts();
-  const n=lbGal.srcs.length;
-  [lbIdx+1,lbIdx-1].forEach(j=>{const s=lbGal.srcs[((j%n)+n)%n];const p=new Image();p.src=s});
-}
-function galGo(d){if(!lbGal)return;const n=lbGal.srcs.length;
-  lbIdx=((lbIdx+d)%n+n)%n;showGal()}
-function closeLB(){if(typeof lb.close==='function')lb.close();else{lb.removeAttribute('open');finishLB()}}
-function finishLB(){lbCanvas.innerHTML='';z=1;px=0;py=0;lbGal=null;lbCard=null;lbOpen=false;
-  document.title=MAIN_T();if(lbLast){lbLast.focus();lbLast=null}}
- $$('.figb').forEach(b=>b.addEventListener('click',()=>openLBSvg(b)));
- $('#zIn').addEventListener('click',()=>{z=clampZ(z*1.35);apply()});
- $('#zOut').addEventListener('click',()=>{z=clampZ(z/1.35);apply()});
- $('#zFit').addEventListener('click',()=>{z=1;px=0;py=0;apply()});
- $('#lbClose').addEventListener('click',closeLB);
-zPrev.addEventListener('click',()=>galGo(-1));
-zNext.addEventListener('click',()=>galGo(1));
-lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
-lb.addEventListener('close',finishLB);
-lb.addEventListener('keydown',e=>{
-  const k=e.key;
-  if(k==='+'||k==='='){e.preventDefault();z=clampZ(z*1.35);apply()}
-  else if(k==='-'||k==='_'){e.preventDefault();z=clampZ(z/1.35);apply()}
-  else if(k==='0'){e.preventDefault();z=1;px=0;py=0;apply()}
-  else if(k.startsWith('Arrow')){
-    e.preventDefault();
-    if(lbGal&&z<=1.01){galGo(k==='ArrowRight'?1:-1)}
-    else{const s=40;
-      if(k==='ArrowLeft')px-=s;if(k==='ArrowRight')px+=s;
-      if(k==='ArrowUp')py-=s;if(k==='ArrowDown')py+=s;apply()}
-  }
-});
-lbStage.addEventListener('wheel',e=>{e.preventDefault();
-  z=clampZ(z*(e.deltaY<0?1.12:1/1.12));apply()},{passive:false});
-const pts=new Map();let pd=false,lx=0,ly=0,pinchD=0,pinchZ=1;
-lbStage.addEventListener('pointerdown',e=>{
-  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  lbStage.setPointerCapture(e.pointerId);
-  if(pts.size===2){const[a,b]=[...pts.values()];
-    pinchD=Math.hypot(a.x-b.x,a.y-b.y);pinchZ=z;pd=false;
-    lbStage.classList.add('panning')}
-  else if(pts.size===1){pd=true;lx=e.clientX;ly=e.clientY;
-    lbStage.classList.add('panning')}
-});
-lbStage.addEventListener('pointermove',e=>{
-  if(!pts.has(e.pointerId))return;
-  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(pts.size===2&&pinchD>0){
-    const[a,b]=[...pts.values()];
-    z=clampZ(pinchZ*Math.hypot(a.x-b.x,a.y-b.y)/pinchD);apply();
-  }else if(pd&&pts.size===1){
-    px+=e.clientX-lx;py+=e.clientY-ly;lx=e.clientX;ly=e.clientY;apply();
-  }
-});
-['pointerup','pointercancel'].forEach(t=>lbStage.addEventListener(t,e=>{
-  pts.delete(e.pointerId);
-  if(pts.size===0){pd=false;lbStage.classList.remove('panning')}
-  if(pts.size<2)pinchD=0;
-}));
-lbStage.addEventListener('dblclick',()=>{if(z>1.01){z=1;px=0;py=0}else{z=2.5}apply()});
 
-/* 11 — CASE-STUDY DIALOGS */
-let lastFocus=null;
-function openCS(d){lastFocus=document.activeElement;
-  if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');
-  document.title=d.dataset[AR()?'titleAr':'titleEn']||MAIN_T()}
-function closeCS(d){if(typeof d.close==='function')d.close();
-  else{d.removeAttribute('open');document.title=MAIN_T();if(lastFocus)lastFocus.focus()}}
- $$('[data-cs]').forEach(b=>b.addEventListener('click',()=>{
-  const d=document.getElementById(b.dataset.cs);if(d)openCS(d)}));
- $$('.cs').forEach(d=>{
-  d.addEventListener('click',e=>{if(e.target===d)closeCS(d)});
-  d.addEventListener('close',()=>{document.title=MAIN_T();if(lastFocus)lastFocus.focus()});
-  const x=d.querySelector('[data-close]');
-  if(x)x.addEventListener('click',()=>closeCS(d));
-});
+/* ---------- Language (EN/AR, with RTL flip) ---------- */
+function initLanguage(lightbox){
+  function setLang(l){
+    const h=document.documentElement;h.lang=l;h.dir=l==='ar'?'rtl':'ltr';
+    const openDialog=document.querySelector('dialog[open]');
+    if(lightbox.isOpenFor(openDialog)){
+      lightbox.refreshTexts();
+    }else if(openDialog&&openDialog.classList.contains('cs')){
+      document.title=openDialog.dataset[l==='ar'?'titleAr':'titleEn']||MAIN_T();
+    }else{
+      document.title=MAIN_T();
+    }
+    $$('[data-ae]').forEach(el=>el.setAttribute('aria-label',l==='ar'?(el.dataset.aa||el.dataset.ae):(el.dataset.ae||el.dataset.aa)));
+    const langBtn=$('#langBtn');if(langBtn)langBtn.setAttribute('aria-pressed',String(l==='ar'));
+    try{localStorage.setItem('ag-lang',l)}catch(e){}
+  }
+  if(document.documentElement.lang==='ar')setLang('ar');
+  $('#langBtn').addEventListener('click',()=>setLang(AR()?'en':'ar'));
+}
 
-/* 12 — COPY EMAIL */
-const MAIL='galal4130@gmail.com';
- $('#copyMail').addEventListener('click',()=>{
-  const done=()=>showToast(AR()?'تم نسخ البريد':'Email copied');
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(MAIL).then(done).catch(()=>fallback())}else fallback();
-  function fallback(){const ta=document.createElement('textarea');ta.value=MAIL;
-    document.body.appendChild(ta);ta.select();
-    try{document.execCommand('copy');done()}catch(e){}
-    document.body.removeChild(ta)}
-});
+/* ---------- Scroll-reveal animations + progress bar + back-to-top ----------
+   Merged because both halves read/mutate the same "still waiting to
+   reveal" list: the IntersectionObserver marks elements revealed as they
+   scroll into view, and the scroll-progress handler sweeps any stragglers
+   (e.g. elements that became visible through a resize rather than a
+   scroll) on every scroll tick. */
+function initRevealsAndProgress(){
+  const sweepVisible=()=>$$('[data-reveal]').forEach(el=>{
+    if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('rv');
+  });
+  sweepVisible();
+
+  let unrevealed=$$('[data-reveal]:not(.rv)');
+  if('IntersectionObserver'in window){
+    try{
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){entry.target.classList.add('rv');io.unobserve(entry.target)}
+        });
+      },{threshold:.08,rootMargin:'0px 0px -5% 0px'});
+      unrevealed.forEach(el=>io.observe(el));
+    }catch(e){unrevealed.forEach(el=>el.classList.add('rv'))}
+  }else{
+    $$('[data-reveal]').forEach(el=>el.classList.add('rv'));
+  }
+
+  const bar=$('#progress'),toTop=$('#toTop');
+  let ticking=false;
+  const onScroll=()=>{
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(()=>{
+      ticking=false;
+      const doc=document.documentElement,max=doc.scrollHeight-innerHeight;
+      if(bar)bar.style.transform='scaleX('+(max>0?scrollY/max:0)+')';
+      toTop.classList.toggle('show',scrollY>600);
+      if(unrevealed.length){
+        unrevealed=unrevealed.filter(el=>{
+          if(el.getBoundingClientRect().top<innerHeight*.95){el.classList.add('rv');return false}
+          return true;
+        });
+      }
+    });
+  };
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+}
+
+/* ---------- Impact-stat count-up animations ---------- */
+function initCountUps(){
+  const fmt=(v,d)=>d?v.toFixed(d):Math.round(v).toLocaleString('en-US');
+  $$('[data-count]').forEach(el=>{
+    const target=parseFloat(el.dataset.count),decimals=parseInt(el.dataset.decimals||'0',10),
+          suffix=el.dataset.suffix||'',prefix=el.dataset.prefix||'';
+    const run=()=>{
+      if(RM())return;
+      const t0=performance.now(),dur=1100;
+      const step=now=>{
+        const p=Math.min(1,(now-t0)/dur),eased=1-Math.pow(1-p,3);
+        el.textContent=prefix+fmt(target*eased,decimals)+suffix;
+        if(p<1)requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if('IntersectionObserver'in window){
+      const o=new IntersectionObserver(entries=>{
+        if(entries[0].isIntersecting){run();o.disconnect()}
+      },{threshold:.4});
+      o.observe(el);
+    }else run();
+  });
+}
+
+/* ---------- Scroll-spy for the primary nav ---------- */
+function initScrollSpy(){
+  const links=$$('.navl a[href^="#"], .mnav a[href^="#"]');
+  const sections=[...new Set(links.map(a=>document.querySelector(a.hash)).filter(Boolean))]
+    .sort((a,b)=>a.offsetTop-b.offsetTop);
+  let ticking=false;
+  const spy=()=>{
+    ticking=false;
+    const line=scrollY+innerHeight*0.4;let current=null;
+    for(const s of sections){if(s.offsetTop<=line)current=s}
+    links.forEach(a=>a.removeAttribute('aria-current'));
+    if(current)links.filter(l=>l.hash==='#'+current.id).forEach(a=>a.setAttribute('aria-current','true'));
+  };
+  const onSpyScroll=()=>{if(!ticking){ticking=true;requestAnimationFrame(spy)}};
+  addEventListener('scroll',onSpyScroll,{passive:true});
+  addEventListener('resize',onSpyScroll);
+  addEventListener('load',spy);spy();
+}
+
+/* ---------- Mobile menu ---------- */
+function initMobileMenu(){
+  const nav=$('#pillnav'),burger=$('#burger');
+  burger.addEventListener('click',()=>{
+    burger.setAttribute('aria-expanded',String(nav.classList.toggle('open')));
+  });
+  $$('#mnav a').forEach(a=>a.addEventListener('click',()=>{
+    nav.classList.remove('open');burger.setAttribute('aria-expanded','false');
+  }));
+}
+
+/* ---------- Project rail (drag/scroll between whole project cards) ---------- */
+function initProjectRail(){
+  const rail=$('#rail');
+  rail.addEventListener('transitionend',()=>{
+    if(rail.classList.contains('rv')&&!rail.dataset.nudged){
+      rail.dataset.nudged='1';
+      if(!RM())rail.classList.add('nudge');
+      setTimeout(()=>rail.classList.remove('nudge'),1000);
+    }
+  });
+  const cardStep=()=>{const c=rail.firstElementChild;return c?c.getBoundingClientRect().width+24:420};
+  const scrollByCards=d=>{
+    const dir=document.documentElement.dir==='rtl'?-1:1;
+    rail.scrollBy({left:d*cardStep()*dir,behavior:RM()?'auto':'smooth'});
+  };
+  $('#rPrev').addEventListener('click',()=>scrollByCards(-1));
+  $('#rNext').addEventListener('click',()=>scrollByCards(1));
+  rail.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){e.preventDefault();scrollByCards(document.documentElement.dir==='rtl'?-1:1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();scrollByCards(document.documentElement.dir==='rtl'?1:-1)}
+  });
+
+  let dragging=false,startX=0,startScroll=0,moved=0;
+  rail.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse')return;
+    /* A card's own photo gallery (buttons, dots, swipe track) already owns
+       its gesture end-to-end — the outer rail must never also claim the
+       pointer for it. Without this, the rail's own setPointerCapture on
+       every pointerdown inside it (including ones that land squarely on a
+       nested nav button) would steal the gesture one level down — the same
+       capture-vs-click flakiness already solved inside the gallery itself. */
+    if(e.target.closest('button, .gallery'))return;
+    dragging=true;moved=0;startX=e.clientX;startScroll=rail.scrollLeft;
+    rail.classList.add('dragging');rail.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener('pointermove',e=>{
+    if(!dragging)return;
+    const dx=e.clientX-startX;moved=Math.max(moved,Math.abs(dx));
+    rail.scrollLeft=startScroll-dx;
+  });
+  ['pointerup','pointercancel'].forEach(t=>rail.addEventListener(t,()=>{
+    dragging=false;rail.classList.remove('dragging');
+  }));
+  rail.addEventListener('click',e=>{
+    if(moved>8){e.preventDefault();e.stopPropagation();moved=0}
+  },true);
+}
+
+/* ---------- Case-study dialogs ---------- */
+function initCaseStudyDialogs(){
+  let lastFocused=null;
+  function open(dialog){
+    lastFocused=document.activeElement;
+    if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+    document.title=dialog.dataset[AR()?'titleAr':'titleEn']||MAIN_T();
+  }
+  function close(dialog){
+    if(typeof dialog.close==='function')dialog.close();
+    else{dialog.removeAttribute('open');document.title=MAIN_T();if(lastFocused)lastFocused.focus()}
+  }
+  $$('[data-cs]').forEach(btn=>btn.addEventListener('click',()=>{
+    const dialog=document.getElementById(btn.dataset.cs);if(dialog)open(dialog);
+  }));
+  $$('.cs').forEach(dialog=>{
+    dialog.addEventListener('click',e=>{if(e.target===dialog)close(dialog)});
+    dialog.addEventListener('close',()=>{document.title=MAIN_T();if(lastFocused)lastFocused.focus()});
+    const closeBtn=dialog.querySelector('[data-close]');
+    if(closeBtn)closeBtn.addEventListener('click',()=>close(dialog));
+  });
+}
+
+/* ---------- Copy-email button ---------- */
+function initCopyEmail(){
+  const MAIL='galal4130@gmail.com';
+  $('#copyMail').addEventListener('click',()=>{
+    const done=()=>showToast(AR()?'تم نسخ البريد':'Email copied');
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(MAIL).then(done).catch(fallback);
+    }else fallback();
+    function fallback(){
+      const ta=document.createElement('textarea');ta.value=MAIL;
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');done()}catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+}
+
+/* ========================= bootstrap ========================= */
+initTheme();
+initMotion();
+/* The galleries/lightbox module must initialize BEFORE language: setLang()
+   may run synchronously below (for a returning visitor whose saved
+   preference is Arabic) and needs the lightbox bridge to already exist. */
+const lightboxBridge=initGalleriesAndLightbox();
+initLanguage(lightboxBridge);
+initRevealsAndProgress();
+initCountUps();
+initScrollSpy();
+initMobileMenu();
+initProjectRail();
+initCaseStudyDialogs();
+initCopyEmail();
 })();
 </script>
 </body>
