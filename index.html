@@ -168,9 +168,9 @@ html[lang="ar"] h1{line-height:1.15}
 .idline i{width:8px;height:8px;background:var(--yel);border:2px solid var(--mk);border-radius:50%}
 .pos{margin-top:16px;font-size:var(--s4);font-weight:500;max-width:34ch}
 .cta-row{margin-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.btn{--mx:0px;--my:0px;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border:2px solid var(--mk);border-radius:999px;background:var(--yel);color:var(--mk);font-weight:800;font-size:var(--s6);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:var(--sx) 4px 0 var(--shad);transform:translate(var(--mx),var(--my));transition:transform .15s ease,box-shadow .15s ease,background-color .2s ease}
-.btn:hover{transform:translate(calc(var(--mx) + var(--l2)),calc(var(--my) - 2px));box-shadow:calc(var(--sx) - var(--l2)) 6px 0 var(--shad)}
-.btn:active{transform:translate(calc(var(--mx) + var(--l2)*-1),calc(var(--my) + 2px));box-shadow:1px 1px 0 var(--shad)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border:2px solid var(--mk);border-radius:999px;background:var(--yel);color:var(--mk);font-weight:800;font-size:var(--s6);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:var(--sx) 4px 0 var(--shad);transition:transform .15s ease,box-shadow .15s ease,background-color .2s ease}
+.btn:hover{transform:translate(var(--l2),-2px);box-shadow:calc(var(--sx) - var(--l2)) 6px 0 var(--shad)}
+.btn:active{transform:translate(calc(var(--l2)*-1),2px);box-shadow:1px 1px 0 var(--shad)}
 .btn.ghost{background:var(--paper2);color:var(--ink);border-color:var(--ink)}
 .btn .ic{width:15px;height:15px}
 .tlink{display:inline-flex;align-items:center;gap:6px;font-size:var(--s7);font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;background:var(--paper2);color:var(--ink);box-shadow:2px 2px 0 var(--shad);transition:background-color .2s ease,transform .15s ease,color .2s ease}
@@ -526,11 +526,6 @@ html[data-theme="dark"] body::after{mix-blend-mode:overlay;opacity:.05}
 .js .avail i{animation:pulse 2.4s ease-in-out infinite}
 body.motion-off .avail i{animation:none}
 
-/* ===== CUSTOM CURSOR (pointer:fine only, off when motion is off) ===== */
-.cursor-dot{position:fixed;top:0;left:0;width:10px;height:10px;border-radius:50%;background:var(--yel);border:2px solid var(--mk);pointer-events:none;z-index:400;transition:width .2s ease,height .2s ease,background-color .2s ease,border-color .2s ease;will-change:transform}
-.cursor-dot.hover{width:38px;height:38px;background:transparent}
-body.has-cursor,body.has-cursor a,body.has-cursor button,body.has-cursor [role="button"]{cursor:none}
-
 /* ===== CASE-STUDY PULL QUOTES ===== */
 .cs-quote{margin-top:14px;padding-inline-start:16px;border-inline-start:4px solid var(--yel);font-family:var(--fh);font-size:1.45rem;line-height:1.4;color:var(--ink)}
 html[lang="ar"] .cs-quote{font-family:'Aref Ruqaa',serif;font-size:1.25rem;line-height:1.7}
@@ -726,6 +721,31 @@ html[dir="rtl"] #progress{transform-origin:right}
     <circle cx="306" cy="152" r="26" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
     <circle cx="306" cy="152" r="16" fill="none" stroke="#0E0B03" stroke-width="2" stroke-dasharray="4 4"/>
     <path d="M296 178L287 208M316 178L325 208" stroke="#0E0B03" stroke-width="3" fill="none"/>
+  </symbol>
+
+  <symbol id="fig-p7" viewBox="0 0 400 260">
+    <rect width="400" height="260" fill="#FAF8F1"/>
+    <text x="30" y="30" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A" letter-spacing="2">LATE DELIVERY RATE</text>
+    <circle cx="78" cy="98" r="44" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
+    <circle cx="78" cy="98" r="44" fill="none" stroke="#0E0B03" stroke-width="2" stroke-dasharray="4 262" stroke-dashoffset="-162" stroke-linecap="round"/>
+    <text x="78" y="94" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="900" fill="#0E0B03">54.1%</text>
+    <text x="78" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#0E0B03" letter-spacing="1">OF 50,000 ORDERS</text>
+    <text x="190" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A" letter-spacing="2">ON-TIME RATE BY CARRIER</text>
+    <g stroke="#0E0B03" stroke-width="2" fill="#FFFDF7">
+      <rect x="190" y="52" width="170" height="18" rx="4"/><rect x="190" y="76" width="170" height="18" rx="4"/>
+      <rect x="190" y="100" width="170" height="18" rx="4"/><rect x="190" y="124" width="170" height="18" rx="4"/>
+    </g>
+    <rect x="190" y="52" width="150" height="18" rx="4" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
+    <rect x="190" y="76" width="118" height="18" rx="4" fill="#0E0B03" fill-opacity=".18" stroke="#0E0B03" stroke-width="2"/>
+    <rect x="190" y="100" width="104" height="18" rx="4" fill="#0E0B03" fill-opacity=".12" stroke="#0E0B03" stroke-width="2"/>
+    <rect x="190" y="124" width="79" height="18" rx="4" fill="#0E0B03" fill-opacity=".08" stroke="#0E0B03" stroke-width="2"/>
+    <path d="M30 170H370M30 170V156" stroke="#0E0B03" stroke-width="2" fill="none"/>
+    <path d="M30 196q40-26 80 0t80 0 80 0 80 0" stroke="#0E0B03" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round" fill="none"/>
+    <circle cx="110" cy="196" r="6" fill="#F1CB1C" stroke="#0E0B03" stroke-width="2"/>
+    <circle cx="270" cy="196" r="6" fill="#0E0B03"/>
+    <rect x="30" y="214" width="146" height="24" rx="12" fill="#0E0B03"/>
+    <text x="103" y="230" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="900" fill="#F1CB1C">17.8-PT CARRIER GAP</text>
+    <text x="370" y="230" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A">17 countries · 8 carriers</text>
   </symbol>
 </defs></svg>
 
@@ -1120,7 +1140,34 @@ html[dir="rtl"] #progress{transform-origin:right}
 
       <div class="rail" id="rail" tabindex="0" role="region" data-reveal aria-label="Project case studies">
 
-        <!-- 001 NYC — real repo file: NYC Dashboard.png -->
+        <!-- 001 Logistics — real repo files; 6-image gallery, cover slide first -->
+        <article class="card">
+          <figure class="fig" data-imgs="Logistics Cover.png,Logistics 1.png,Logistics 2.png,Logistics 3.png,Logistics 4.png,Logistics 5.png">
+            <button class="figb" type="button" data-ae="Zoom visual: Logistics Delivery Performance and Delay Analytics" data-aa="تكبير الصورة: تحليل أداء وتأخيرات التسليم اللوجستي">
+              <svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p7"/></svg>
+              <span class="figov" aria-hidden="true"><span><svg class="ic"><use href="#i-zin"/></svg><span class="e">Zoom</span><span class="a">تكبير</span></span></span>
+            </button>
+            <figcaption><span class="e">Executive dashboard — five report pages</span><span class="a">لوحة تنفيذية — خمس صفحات تقرير</span></figcaption>
+          </figure>
+          <div class="cbody">
+            <div class="ctop"><span class="idx">001</span><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span></div>
+            <h3><span class="e">Logistics Delivery Performance &amp; Delay Analytics</span><span class="a">تحليل أداء وتأخيرات التسليم اللوجستي</span></h3>
+            <p class="outcome"><span class="e"><mark class="hl">54.1% late deliveries</mark> — diagnosed order by order</span><span class="a"><mark class="hl">54.1% تسليمات متأخرة</mark> — تم تشخيصها طلباً بطلب</span></p>
+            <p class="ctx"><span class="e">Why more than half of all orders miss their promised date, what one lost day costs in returns and rating, and which levers actually move the number — answered end to end, from raw delivery flags to a five-page executive dashboard.</span>
+            <span class="a">لماذا يفوت أكثر من نصف الطلبات موعده الموعود، وماذا يكلف يوم تأخير واحد من مرتجعات وتقييم، وأي الروافع تحرك الرقم فعلاً — إجابة من البداية للنهاية: من أعلام التأخير الخام إلى لوحة تنفيذية من خمس صفحات.</span></p>
+            <p class="mini"><span class="e">What was done</span><span class="a">ما الذي تم</span></p>
+            <ul>
+              <li><span class="e">Audited 50,000 deliveries across 17 countries, 8 carriers, and 10 warehouses to isolate what actually breaks the delivery promise.</span><span class="a">دققت 50,000 عملية تسليم عبر 17 دولة و8 شركات شحن و10 مستودعات لعزل ما يكسر وعد التسليم فعلاً.</span></li>
+              <li><span class="e">Rebuilt the late flag from actual vs. promised dates, then cut one KPI tree five ways — carrier, warehouse, weather, distance, customer outcome.</span><span class="a">أعدت بناء علامة التأخير من التاريخ الفعلي مقابل الموعود، ثم قسّمت شجرة مؤشرات أداء واحدة خمس طرق — شركة الشحن، المستودع، الطقس، المسافة، نتيجة العميل.</span></li>
+              <li><span class="e">Identified the real drivers: a 17.8-point carrier spread at identical cost and SLA, a weather-blind 7.2-day ETA, and a low-priority queue failing 79.7% of its orders.</span><span class="a">حددت المحركات الحقيقية: فارق 17.8 نقطة بين شركات الشحن عند التكلفة واتفاقية مستوى الخدمة ذاتها، ووقت وصول متوقع 7.2 يوم لا يراعي الطقس، وطابور أولوية منخفضة يفشل في 79.7% من طلباته.</span></li>
+              <li><span class="e">Translated the findings into a five-page executive dashboard and a four-point healing plan — weather-aware ETAs, carrier reallocation, a capped low-priority queue, and a guard on the first 24 hours of slippage.</span><span class="a">حوّلت النتائج إلى لوحة تنفيذية من خمس صفحات وخطة علاج من أربع نقاط — أوقات وصول متوقعة تراعي الطقس، وإعادة توزيع شركات الشحن، وطابور أولوية منخفضة محدود السقف، وحارس على أول 24 ساعة من الانزلاق.</span></li>
+            </ul>
+            <div class="tools"><span class="chip">Python</span><span class="chip">Excel</span><span class="chip">Power BI</span></div>
+            <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p7"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
+          </div>
+        </article>
+
+        <!-- 002 NYC — real repo file: NYC Dashboard.png -->
         <article class="card">
           <figure class="fig" data-imgs="NYC Dashboard.png">
             <button class="figb" type="button" data-ae="Zoom visual: NYC Airbnb Market and Revenue Analysis" data-aa="تكبير الصورة: سوق وإيرادات Airbnb في نيويورك">
@@ -1130,7 +1177,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">NYC Airbnb case-study dashboard — Looker Studio</span><span class="a">لوحة دراسة حالة Airbnb نيويورك — Looker Studio</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">001</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
+            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
             <h3><span class="e">NYC Airbnb Market &amp; Revenue Analysis</span><span class="a">تحليل سوق وإيرادات Airbnb في نيويورك</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">48K+ listings</mark> mapped to revenue per location</span><span class="a"><mark class="hl">أكثر من 48 ألف شقة</mark> مرتبطة بالإيراد حسب الموقع</span></p>
             <p class="ctx"><span class="e">Pricing, room types, and revenue structure across NYC's five boroughs — including how much revenue could be earned per month.</span>
@@ -1158,7 +1205,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Financial Performance Dashboard — Power BI</span><span class="a">لوحة الأداء المالي — Power BI</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
+            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
             <h3><span class="e">Financial Performance &amp; Variance Analysis</span><span class="a">تحليل الأداء المالي وتباينات الموازنة</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">$94.8M variance</mark> exposed · 0.011 plan-vs-actual correlation</span><span class="a"><mark class="hl">تباين 94.8 مليون دولار</mark> · ارتباط 0.011 بين المخطط والفعلي</span></p>
             <p class="ctx"><span class="e">A perceived overspending problem that the data revealed as something deeper: a systemic forecasting failure.</span>
@@ -1186,7 +1233,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Power BI dashboard — five report views</span><span class="a">لوحة Power BI — خمس شاشات للتقرير</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">Customer Segmentation &amp; Marketing Analytics</span><span class="a">تقسيم العملاء وتحليلات التسويق</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">82.9% Adjusted R²</mark> — regression model</span><span class="a"><mark class="hl">82.9% معامل تحديد معدّل</mark> — نموذج الانحدار</span></p>
             <p class="ctx"><span class="e">How customers actually behave, how well campaigns and marketing channels perform, and which markers flag churn — answered end to end, from model to dashboard.</span>
@@ -1213,7 +1260,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">RFM tier map — loyal · high spenders · inactive</span><span class="a">خريطة فئات RFM — أوفياء · كبار المنفقين · غير نشطين</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">RFM-Based Customer Analytics</span><span class="a">تحليلات العملاء بقاعدة RFM</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">~4,000 customers</mark> scored from 500K+ transactions</span><span class="a"><mark class="hl">نحو 4,000 عميل</mark> مُقيَّمون من أكثر من 500 ألف معاملة</span></p>
             <p class="ctx"><span class="e">Which customers deserve retention investment — and which are already gone. Worked on the UCI Online Retail dataset of half a million transactions.</span>
@@ -1240,7 +1287,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Join strategy, aggregations, and window functions across 11 tables</span><span class="a">استراتيجية ربط وتجميعات ودوال نوافذ عبر 11 جدولاً</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
+            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
             <h3><span class="e">SQL Sales Performance Analysis — Chinook Database</span><span class="a">تحليل أداء المبيعات بـ SQL — قاعدة Chinook</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">22K rows · 11 tables</mark>, fully queried</span><span class="a"><mark class="hl">22 ألف صف · 11 جدولاً</mark> — استعلام كامل</span></p>
             <p class="ctx"><span class="e">Which products, countries, and months actually drive revenue across the Chinook sales database.</span>
@@ -1267,7 +1314,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Published literature review — ASTJ Vol. 3, Issue 2, 2026</span><span class="a">مراجعة أدبيات منشورة — ASTJ المجلد 3، العدد 2، 2026</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
+            <div class="ctop"><span class="idx">007</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
             <h3><span class="e">Aethea — AI Medical Assistant</span><span class="a">Aethea — مساعد طبي بالذكاء الاصطناعي</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">Published</mark> — ASTJ Vol. 3, Issue 2, 2026</span><span class="a"><mark class="hl">منشور</mark> — ASTJ المجلد 3، العدد 2، 2026</span></p>
             <p class="ctx"><span class="e">University graduation project: the technical argument for an AI medical assistant, built on verified references.</span>
@@ -1510,7 +1557,28 @@ html[dir="rtl"] #progress{transform-origin:right}
   <div class="lb-cap"><span class="cap-txt" id="lbCap"></span></div>
 </dialog>
 
-<!-- ===== CASE STUDY DIALOGS ×6 ===== -->
+<!-- ===== CASE STUDY DIALOGS ×7 ===== -->
+<dialog class="cs" id="cs-p7" aria-labelledby="cs-t7"
+  data-title-en="Logistics Delivery Performance &amp; Delay Analytics — Case Study | Ahmed Galal Abdelhai"
+  data-title-ar="دراسة حالة: تحليل أداء وتأخيرات التسليم اللوجستي | أحمد جلال">
+  <div class="cs-bar"><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span>
+    <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="cs-body">
+    <h2 id="cs-t7"><span class="e">Logistics Delivery Performance &amp; Delay Analytics</span><span class="a">تحليل أداء وتأخيرات التسليم اللوجستي</span></h2>
+    <p class="cs-quote"><span class="e">More than half the orders weren't late because of distance — they were late because the ETA never knew it was raining.</span><span class="a">لم يتأخر أكثر من نصف الطلبات بسبب المسافة — بل لأن الوقت المتوقع لم يكن يعرف أصلاً أن السماء تمطر.</span></p>
+    <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p7"/></svg></figure>
+    <p class="outcome"><span class="e"><mark class="hl">54.1% late deliveries</mark> — diagnosed order by order</span><span class="a"><mark class="hl">54.1% تسليمات متأخرة</mark> — تم تشخيصها طلباً بطلب</span></p>
+    <p class="ctx"><span class="e">Why more than half of all orders miss their promised date, what one lost day costs in returns and rating, and which levers actually move the number — answered end to end, from raw delivery flags to a five-page executive dashboard.</span><span class="a">لماذا يفوت أكثر من نصف الطلبات موعده الموعود، وماذا يكلف يوم تأخير واحد من مرتجعات وتقييم، وأي الروافع تحرك الرقم فعلاً — إجابة من البداية للنهاية.</span></p>
+    <ul>
+      <li><span class="e">50,000 deliveries audited across 17 countries, 8 carriers, and 10 warehouses.</span><span class="a">تدقيق 50,000 عملية تسليم عبر 17 دولة و8 شركات شحن و10 مستودعات.</span></li>
+      <li><span class="e">A 17.8-point on-time gap between carriers at identical cost and SLA.</span><span class="a">فارق 17.8 نقطة في الالتزام بالموعد بين شركات الشحن عند التكلفة واتفاقية الخدمة ذاتها.</span></li>
+      <li><span class="e">A weather-blind 7.2-day ETA and a low-priority queue failing 79.7% of its orders.</span><span class="a">وقت وصول متوقع 7.2 يوم لا يراعي الطقس، وطابور أولوية منخفضة يفشل في 79.7% من طلباته.</span></li>
+      <li><span class="e">A four-point healing plan: weather-aware ETAs, carrier reallocation, a capped low-priority queue, and a 24-hour slippage guard.</span><span class="a">خطة علاج من أربع نقاط: أوقات وصول تراعي الطقس، وإعادة توزيع شركات الشحن، وطابور أولوية منخفضة محدود، وحارس على أول 24 ساعة من الانزلاق.</span></li>
+    </ul>
+    <div class="tools"><span class="chip">Python</span><span class="chip">Excel</span><span class="chip">Power BI</span></div>
+  </div>
+</dialog>
+
 <dialog class="cs" id="cs-p3" aria-labelledby="cs-t3"
   data-title-en="NYC Airbnb Market &amp; Revenue Analysis — Case Study | Ahmed Galal Abdelhai"
   data-title-ar="دراسة حالة: سوق وإيرادات Airbnb في نيويورك | أحمد جلال">
@@ -2237,59 +2305,9 @@ function initCopyEmail(){
   });
 }
 
-/* ---------- Custom cursor + magnetic primary buttons ----------
-   Desktop-with-a-precise-pointer only (touch devices get no benefit from
-   this and a phantom custom cursor would be actively wrong there), and
-   skipped entirely when the motion preference is off. Fails silently and
-   leaves the native cursor untouched if anything about this environment
-   doesn't support it — this is a nice-to-have, never load-bearing. */
-function initCursorAndMagnetic(){
-  try{
-    if(!matchMedia('(pointer:fine)').matches||RM())return;
-    const dot=document.createElement('div');
-    dot.className='cursor-dot';dot.setAttribute('aria-hidden','true');
-    document.body.appendChild(dot);
-    document.body.classList.add('has-cursor');
-
-    let tx=innerWidth/2,ty=innerHeight/2,x=tx,y=ty;
-    addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
-    (function follow(){
-      x+=(tx-x)*.2;y+=(ty-y)*.2;
-      dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
-      requestAnimationFrame(follow);
-    })();
-
-    $$('a,button,[role="button"],summary').forEach(el=>{
-      el.addEventListener('mouseenter',()=>dot.classList.add('hover'));
-      el.addEventListener('mouseleave',()=>dot.classList.remove('hover'));
-    });
-
-    /* Magnetic pull: only the primary call-to-action buttons, so the effect
-       stays a deliberate accent rather than a page-wide gimmick. Written as
-       CSS custom properties (--mx/--my) that the .btn hover/active rules
-       already combine with their own transform, rather than setting an
-       inline transform directly — that would silently override (not add
-       to) the existing hover-lift and active-press effects. */
-    $$('.btn').forEach(btn=>{
-      btn.addEventListener('mousemove',e=>{
-        const r=btn.getBoundingClientRect();
-        const mx=(e.clientX-r.left-r.width/2)*.18;
-        const my=(e.clientY-r.top-r.height/2)*.18;
-        btn.style.setProperty('--mx',mx+'px');
-        btn.style.setProperty('--my',my+'px');
-      });
-      btn.addEventListener('mouseleave',()=>{
-        btn.style.setProperty('--mx','0px');
-        btn.style.setProperty('--my','0px');
-      });
-    });
-  }catch(e){/* no custom cursor, no magnetic buttons — the page still works perfectly without either */}
-}
-
 /* ========================= bootstrap ========================= */
 initTheme();
 initMotion();
-initCursorAndMagnetic();
 /* The galleries/lightbox module must initialize BEFORE language: setLang()
    may run synchronously below (for a returning visitor whose saved
    preference is Arabic) and needs the lightbox bridge to already exist. */
