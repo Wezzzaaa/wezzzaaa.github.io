@@ -168,9 +168,9 @@ html[lang="ar"] h1{line-height:1.15}
 .idline i{width:8px;height:8px;background:var(--yel);border:2px solid var(--mk);border-radius:50%}
 .pos{margin-top:16px;font-size:var(--s4);font-weight:500;max-width:34ch}
 .cta-row{margin-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border:2px solid var(--mk);border-radius:999px;background:var(--yel);color:var(--mk);font-weight:800;font-size:var(--s6);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:var(--sx) 4px 0 var(--shad);transition:transform .15s ease,box-shadow .15s ease,background-color .2s ease}
-.btn:hover{transform:translate(var(--l2),-2px);box-shadow:calc(var(--sx) - var(--l2)) 6px 0 var(--shad)}
-.btn:active{transform:translate(calc(var(--l2)*-1),2px);box-shadow:1px 1px 0 var(--shad)}
+.btn{--mx:0px;--my:0px;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border:2px solid var(--mk);border-radius:999px;background:var(--yel);color:var(--mk);font-weight:800;font-size:var(--s6);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:var(--sx) 4px 0 var(--shad);transform:translate(var(--mx),var(--my));transition:transform .15s ease,box-shadow .15s ease,background-color .2s ease}
+.btn:hover{transform:translate(calc(var(--mx) + var(--l2)),calc(var(--my) - 2px));box-shadow:calc(var(--sx) - var(--l2)) 6px 0 var(--shad)}
+.btn:active{transform:translate(calc(var(--mx) + var(--l2)*-1),calc(var(--my) + 2px));box-shadow:1px 1px 0 var(--shad)}
 .btn.ghost{background:var(--paper2);color:var(--ink);border-color:var(--ink)}
 .btn .ic{width:15px;height:15px}
 .tlink{display:inline-flex;align-items:center;gap:6px;font-size:var(--s7);font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;background:var(--paper2);color:var(--ink);box-shadow:2px 2px 0 var(--shad);transition:background-color .2s ease,transform .15s ease,color .2s ease}
@@ -515,6 +515,26 @@ details[open] .faq-a{animation:faqIn .3s ease}
 .foot a{color:var(--onink-mut);transition:color .2s ease}
 .foot a:hover{color:var(--yel)}
 
+/* ===== PAPER GRAIN ===== */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:300;opacity:.035;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+html[data-theme="dark"] body::after{mix-blend-mode:overlay;opacity:.05}
+
+/* ===== AVAILABILITY PILL ===== */
+.avail{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:var(--s7);font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px 7px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--paper2);color:var(--ink)}
+.avail i{width:8px;height:8px;border-radius:50%;background:#3DBE6B;border:2px solid var(--mk);flex:none}
+.js .avail i{animation:pulse 2.4s ease-in-out infinite}
+body.motion-off .avail i{animation:none}
+
+/* ===== CUSTOM CURSOR (pointer:fine only, off when motion is off) ===== */
+.cursor-dot{position:fixed;top:0;left:0;width:10px;height:10px;border-radius:50%;background:var(--yel);border:2px solid var(--mk);pointer-events:none;z-index:400;transition:width .2s ease,height .2s ease,background-color .2s ease,border-color .2s ease;will-change:transform}
+.cursor-dot.hover{width:38px;height:38px;background:transparent}
+body.has-cursor,body.has-cursor a,body.has-cursor button,body.has-cursor [role="button"]{cursor:none}
+
+/* ===== CASE-STUDY PULL QUOTES ===== */
+.cs-quote{margin-top:14px;padding-inline-start:16px;border-inline-start:4px solid var(--yel);font-family:var(--fh);font-size:1.45rem;line-height:1.4;color:var(--ink)}
+html[lang="ar"] .cs-quote{font-family:'Aref Ruqaa',serif;font-size:1.25rem;line-height:1.7}
+
 /* ===== REVEALS ===== */
 .js [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;transition-delay:calc(var(--d,0)*90ms)}
 .js [data-reveal].rv{opacity:1;transform:none}
@@ -765,6 +785,7 @@ html[dir="rtl"] #progress{transform-origin:right}
         <h1>Ahmed Galal<br>Abdelhai</h1>
         <p class="role"><span class="e">Data Analyst &amp; Software Engineer</span><span class="a">محلل بيانات ومهندس برمجيات</span></p>
         <p class="idline"><span class="e"><b>Systems Orchestrator</b></span><span class="a"><b>منظّم الأنظمة</b></span><i aria-hidden="true"></i><span class="e"><b>Decision Architect</b></span><span class="a"><b>مهندس القرار</b></span></p>
+        <p class="avail" data-reveal><i aria-hidden="true"></i><span class="e">Open to opportunities</span><span class="a">متاح لفرص جديدة</span></p>
         <p class="pos">
           <span class="e">I extract clear <mark class="hl-sh">insight</mark> from complex data and build the systems that turn it into decisions.</span>
           <span class="a">أستخرج <mark class="hl-sh">رؤية</mark> واضحة من البيانات المعقدة وأبني الأنظمة التي تحوّلها إلى قرارات.</span>
@@ -1362,6 +1383,18 @@ html[dir="rtl"] #progress{transform-origin:right}
           <p class="d"><span class="e">A strong foundation in the end-to-end data analytics lifecycle — applying Excel, SQL, and analytical methodologies to transform, prepare, analyze, and communicate data effectively.</span>
           <span class="a">أساس متين في دورة حياة تحليل البيانات من البداية للنهاية — بتطبيق Excel وSQL ومنهجيات تحليلية لتحويل البيانات وإعدادها وتحليلها وإيصالها بفعالية.</span></p>
         </article>
+        <article class="cert">
+          <span class="cert-aw" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-award"/></svg></span>
+          <div class="cert-h"><span class="n">A/B Testing in Python</span><span class="i">365 Data Science</span></div>
+          <p class="d"><span class="e">Applied statistical hypothesis testing in Python to design, run, and interpret controlled experiments — from sample-size reasoning and significance testing to translating a result into a clear go/no-go recommendation rather than a number alone.</span>
+          <span class="a">تطبيق اختبار الفرضيات الإحصائي بلغة Python لتصميم التجارب الخاضعة للتحكم وتشغيلها وتفسيرها — من تحديد حجم العينة واختبار الدلالة الإحصائية إلى ترجمة النتيجة إلى توصية تنفيذية واضحة لا مجرد رقم.</span></p>
+        </article>
+        <article class="cert">
+          <span class="cert-aw" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-award"/></svg></span>
+          <div class="cert-h"><span class="n">Digital Marketing</span><span class="i">Sprints — SprintUp</span></div>
+          <p class="d"><span class="e">A practical grounding in digital marketing strategy — campaign planning, channel selection, and performance measurement — building the commercial literacy that keeps an analysis tied to a real business outcome, not just a metric.</span>
+          <span class="a">أساس عملي في استراتيجية التسويق الرقمي — تخطيط الحملات واختيار القنوات وقياس الأداء — بما يبني الحس التجاري الذي يربط التحليل بنتيجة عمل حقيقية لا بمجرد مؤشر.</span></p>
+        </article>
       </div>
     </div>
   </section>
@@ -1485,6 +1518,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t3"><span class="e">NYC Airbnb Market &amp; Revenue Analysis</span><span class="a">تحليل سوق وإيرادات Airbnb في نيويورك</span></h2>
+    <p class="cs-quote"><span class="e">The data didn't just rank the boroughs — it put a dollar figure on the gap between them.</span><span class="a">لم تكتفِ البيانات بترتيب الأحياء — بل وضعت رقماً بالدولار للفجوة بينها.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p3"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">48K+ listings</mark> mapped to revenue per location</span><span class="a"><mark class="hl">أكثر من 48 ألف شقة</mark> مرتبطة بالإيراد حسب الموقع</span></p>
     <p class="ctx"><span class="e">Pricing, room types, and revenue structure across the five boroughs — including monthly revenue potential.</span><span class="a">التسعير وأنواع الغرف وهيكل الإيرادات عبر الأحياء الخمسة — مع الإمكانات الشهرية.</span></p>
@@ -1504,6 +1538,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t5"><span class="e">Financial Performance &amp; Variance Analysis</span><span class="a">تحليل الأداء المالي وتباينات الموازنة</span></h2>
+    <p class="cs-quote"><span class="e">The real finding wasn't overspending — it was that nobody could forecast at all.</span><span class="a">لم تكن المشكلة الحقيقية تجاوز الإنفاق — بل أن لا أحد كان قادراً على التنبؤ أصلاً.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p5"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">$94.8M variance</mark> exposed · 0.011 plan-vs-actual correlation</span><span class="a"><mark class="hl">تباين 94.8 مليون دولار</mark> · ارتباط 0.011 بين المخطط والفعلي</span></p>
     <p class="ctx"><span class="e">A perceived overspending problem that the data revealed as something deeper: a systemic forecasting failure.</span><span class="a">مشكلة تجاوز إنفاق ظاهرة كشفتها البيانات بأنها أعمق: خلل منهجي في التنبؤ.</span></p>
@@ -1524,6 +1559,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t1"><span class="e">Customer Segmentation &amp; Marketing Analytics</span><span class="a">تقسيم العملاء وتحليلات التسويق</span></h2>
+    <p class="cs-quote"><span class="e">A churn signal is only useful the week before someone leaves, not the week after.</span><span class="a">إشارة التسرّب لا تفيد إلا في الأسبوع الذي يسبق رحيل العميل، لا الذي يليه.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p1"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">82.9% Adjusted R²</mark> — regression model</span><span class="a"><mark class="hl">82.9% معامل تحديد معدّل</mark> — نموذج الانحدار</span></p>
     <p class="ctx"><span class="e">How customers actually behave, how well campaigns and marketing channels perform, and which markers flag churn — answered end to end, from model to dashboard.</span><span class="a">كيف يتصرف العملاء فعلاً، وكيف تؤدي الحملات والقنوات، وأي المؤشرات تنبئ بالتسرّب — إجابة من البداية للنهاية.</span></p>
@@ -1543,6 +1579,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t2"><span class="e">RFM-Based Customer Analytics</span><span class="a">تحليلات العملاء بقاعدة RFM</span></h2>
+    <p class="cs-quote"><span class="e">Half a million transactions, and the question was never "how many" — it was "which 4,000."</span><span class="a">نصف مليون معاملة، والسؤال لم يكن يوماً "كم" — بل "أي أربعة آلاف".</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p2"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">~4,000 customers</mark> scored from 500K+ transactions</span><span class="a"><mark class="hl">نحو 4,000 عميل</mark> مُقيَّمون من أكثر من 500 ألف معاملة</span></p>
     <p class="ctx"><span class="e">UCI Online Retail dataset — half a million transactions scored on Recency, Frequency, Monetary value.</span><span class="a">بيانات UCI Online Retail — نصف مليون معاملة قُيّمت على الحداثة والتكرار والقيمة المالية.</span></p>
@@ -1562,6 +1599,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t4"><span class="e">SQL Sales Performance Analysis — Chinook Database</span><span class="a">تحليل أداء المبيعات بـ SQL — قاعدة Chinook</span></h2>
+    <p class="cs-quote"><span class="e">Eleven tables can tell one story, if the joins are asked the right question.</span><span class="a">أحد عشر جدولاً يمكن أن تروي قصة واحدة، إن سُئلت عمليات الربط السؤال الصحيح.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p4"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">22K rows · 11 tables</mark>, fully queried</span><span class="a"><mark class="hl">22 ألف صف · 11 جدولاً</mark> — استعلام كامل</span></p>
     <p class="ctx"><span class="e">Which products, countries, and months actually drive revenue across the Chinook sales database.</span><span class="a">أي المنتجات والدول والأشهر تحقق الإيراد فعلاً عبر قاعدة بيانات مبيعات Chinook.</span></p>
@@ -1581,6 +1619,7 @@ html[dir="rtl"] #progress{transform-origin:right}
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
     <h2 id="cs-t6"><span class="e">Aethea — AI Medical Assistant</span><span class="a">Aethea — مساعد طبي بالذكاء الاصطناعي</span></h2>
+    <p class="cs-quote"><span class="e">An AI medical assistant is only as trustworthy as the explanation it's willing to give.</span><span class="a">لا يكون المساعد الطبي بالذكاء الاصطناعي جديراً بالثقة إلا بقدر التفسير الذي يقدمه.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p6"/></svg></figure>
     <p class="outcome"><span class="e"><mark class="hl">Published</mark> — ASTJ Vol. 3, Issue 2, 2026</span><span class="a"><mark class="hl">منشور</mark> — ASTJ المجلد 3، العدد 2، 2026</span></p>
     <p class="ctx"><span class="e">University graduation project: the technical argument for an AI medical assistant, built on verified references across Clinical Decision Support, Explainable AI, healthcare workflow, and patient data privacy.</span><span class="a">مشروع تخرج جامعي: الحجة التقنية لمساعد طبي بالذكاء الاصطناعي، مبني على مراجع موثقة في دعم القرار السريري والذكاء الاصطناعي القابل للتفسير وسير العمل الطبي وخصوصية بيانات المرضى.</span></p>
@@ -2198,9 +2237,59 @@ function initCopyEmail(){
   });
 }
 
+/* ---------- Custom cursor + magnetic primary buttons ----------
+   Desktop-with-a-precise-pointer only (touch devices get no benefit from
+   this and a phantom custom cursor would be actively wrong there), and
+   skipped entirely when the motion preference is off. Fails silently and
+   leaves the native cursor untouched if anything about this environment
+   doesn't support it — this is a nice-to-have, never load-bearing. */
+function initCursorAndMagnetic(){
+  try{
+    if(!matchMedia('(pointer:fine)').matches||RM())return;
+    const dot=document.createElement('div');
+    dot.className='cursor-dot';dot.setAttribute('aria-hidden','true');
+    document.body.appendChild(dot);
+    document.body.classList.add('has-cursor');
+
+    let tx=innerWidth/2,ty=innerHeight/2,x=tx,y=ty;
+    addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+    (function follow(){
+      x+=(tx-x)*.2;y+=(ty-y)*.2;
+      dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+      requestAnimationFrame(follow);
+    })();
+
+    $$('a,button,[role="button"],summary').forEach(el=>{
+      el.addEventListener('mouseenter',()=>dot.classList.add('hover'));
+      el.addEventListener('mouseleave',()=>dot.classList.remove('hover'));
+    });
+
+    /* Magnetic pull: only the primary call-to-action buttons, so the effect
+       stays a deliberate accent rather than a page-wide gimmick. Written as
+       CSS custom properties (--mx/--my) that the .btn hover/active rules
+       already combine with their own transform, rather than setting an
+       inline transform directly — that would silently override (not add
+       to) the existing hover-lift and active-press effects. */
+    $$('.btn').forEach(btn=>{
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const mx=(e.clientX-r.left-r.width/2)*.18;
+        const my=(e.clientY-r.top-r.height/2)*.18;
+        btn.style.setProperty('--mx',mx+'px');
+        btn.style.setProperty('--my',my+'px');
+      });
+      btn.addEventListener('mouseleave',()=>{
+        btn.style.setProperty('--mx','0px');
+        btn.style.setProperty('--my','0px');
+      });
+    });
+  }catch(e){/* no custom cursor, no magnetic buttons — the page still works perfectly without either */}
+}
+
 /* ========================= bootstrap ========================= */
 initTheme();
 initMotion();
+initCursorAndMagnetic();
 /* The galleries/lightbox module must initialize BEFORE language: setLang()
    may run synchronously below (for a returning visitor whose saved
    preference is Arabic) and needs the lightbox bridge to already exist. */
