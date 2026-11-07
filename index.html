@@ -423,10 +423,15 @@ html[dir="rtl"] .g-nav.next .ic{transform:translate(-50%,-50%) scaleX(-1)}
    regardless of browser or what else is styled on this element. */
 .lb{position:fixed;inset:0;margin:auto;border:2px solid var(--ink);border-radius:20px;box-shadow:calc(var(--sx) * 2) 10px 0 var(--shad);padding:0;width:min(1100px,96vw);height:min(80vh,760px);background:var(--paper);color:var(--ink);display:flex;flex-direction:column}
 .lb:not([open]){display:none}
-/* True fullscreen: the dialog takes the whole viewport; the flex column below
-   (bar / stage / caption) reflows automatically since the stage is flex:1 —
-   no hardcoded height math needed for either state. */
-.lb:fullscreen,.lb:-webkit-full-screen{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border-width:0;inset:0;margin:0}
+/* True fullscreen: the FULLSCREEN TARGET IS THE DOCUMENT (<html>), not the
+   dialog itself. Requesting fullscreen on an element that is simultaneously
+   a modal <dialog> (already promoted to the top layer by showModal) is a
+   known source of real cross-browser flakiness — some engines silently
+   reject it. Fullscreening the document root is the single most reliably
+   supported target the API has, so the dialog just reacts to the document
+   being fullscreen via this descendant selector; it keeps rendering in its
+   own, separate top layer above the page exactly as it always does. */
+html:fullscreen .lb,html:-webkit-full-screen .lb{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border-width:0;inset:0;margin:0}
 .lb::backdrop{background:rgba(0,0,0,.72)}
 .lb-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-block-end:2px solid var(--ink);flex:none}
 .lb-title{font-weight:900;font-size:var(--s6);text-transform:uppercase;letter-spacing:.04em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1164,7 +1169,34 @@ html[dir="rtl"] #progress{transform-origin:right}
 
       <div class="rail" id="rail" tabindex="0" role="region" data-reveal aria-label="Project case studies">
 
-        <!-- 001 Logistics — real repo files; 6-image gallery, cover slide first -->
+        <!-- 001 Airbnb Europe — real repo files; 5-image gallery, cover slide first -->
+        <article class="card">
+          <figure class="fig" data-imgs="Airbnb Cover.png,Airbnb 1.png,Airbnb 2.png,Airbnb 3.png,Airbnb 4.png">
+            <button class="figb" type="button" data-ae="Zoom visual: Airbnb Europe Market Intelligence and Revenue Analytics" data-aa="تكبير الصورة: ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا">
+              <svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p8"/></svg>
+              <span class="figov" aria-hidden="true"><span><svg class="ic"><use href="#i-zin"/></svg><span class="e">Zoom</span><span class="a">تكبير</span></span></span>
+            </button>
+            <figcaption><span class="e">Executive report — five pages</span><span class="a">تقرير تنفيذي — خمس صفحات</span></figcaption>
+          </figure>
+          <div class="cbody">
+            <div class="ctop"><span class="idx">001</span><span class="cat"><span class="e">Revenue Intelligence</span><span class="a">ذكاء الإيراد</span></span></div>
+            <h3><span class="e">Airbnb Europe Market Intelligence &amp; Revenue Analytics</span><span class="a">ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا</span></h3>
+            <p class="outcome"><span class="e"><mark class="hl">31.3% of nights sold</mark> — diagnosed city by city</span><span class="a"><mark class="hl">31.3% من الليالي المباعة</mark> — تم تشخيصها مدينة بمدينة</span></p>
+            <p class="ctx"><span class="e">Why Europe's short-term rentals sit empty two nights in three, and what separates the hosts earning 82% more per listing — answered end to end, from 95,435 raw rows to a five-page executive report.</span>
+            <span class="a">لماذا تبقى العقارات الأوروبية للإيجار القصير شاغرة ليلتين من كل ثلاث، وما الذي يميز المضيفين الذين يكسبون 82% أكثر لكل قائمة — إجابة من البداية للنهاية، من 95,435 صف خام إلى تقرير تنفيذي من خمس صفحات.</span></p>
+            <p class="mini"><span class="e">What was done</span><span class="a">ما الذي تم</span></p>
+            <ul>
+              <li><span class="e">Validated 95,435 raw listings before drawing a single chart — profiled all 57 columns, quarantined 590 corrupt export rows, confirmed zero duplicate listing IDs, and USD-normalized 16 native currencies into one clean 94,845-listing base.</span><span class="a">تحققت من 95,435 قائمة خام قبل رسم أي مخطط — دققت جميع الأعمدة الـ57، وعزلت 590 صفاً فاسداً من التصدير، وتأكدت من خلو القوائم من أي تكرار في المعرفات، وطبّعت 16 عملة محلية إلى الدولار في قاعدة نظيفة من 94,845 قائمة.</span></li>
+              <li><span class="e">Rebuilt the market end to end — $1.77B in trailing revenue and 10.98M guest reviews across 373 cities and 36 countries, on trailing-12-month and last-90-day windows, after re-engineering and verifying the metric definitions against the source.</span><span class="a">أعدت بناء السوق من البداية للنهاية — 1.77 مليار دولار من الإيرادات المتحركة و10.98 مليون تقييم ضيف عبر 373 مدينة و36 دولة، على نافذتي 12 شهراً متحركة وآخر 90 يوماً، بعد إعادة هندسة تعريفات المقاييس والتحقق منها مقابل المصدر.</span></li>
+              <li><span class="e">Isolated where the money actually sits: France, the UK, and Spain concentrate 56.1% of revenue while the top 10 cities hold just 8.2%; entire-home units are 86% of supply but 93% of revenue; Edinburgh's RevPAR runs 5.7× the European average.</span><span class="a">حددت أين يستقر المال فعلاً: فرنسا والمملكة المتحدة وإسبانيا تستحوذ على 56.1% من الإيرادات بينما لا تحمل أفضل 10 مدن سوى 8.2%؛ وحدات المنزل الكامل تمثل 86% من العرض لكن 93% من الإيراد؛ وعائد إدنبرة لكل غرفة متاحة يبلغ 5.7 أضعاف المتوسط الأوروبي.</span></li>
+              <li><span class="e">Quantified the professional-host premium and shipped the report — Superhosts (44% of listings) earn 82% more per listing at 2.1× the occupancy while pricing 8% below non-Superhosts; formalized into a five-page executive report, then re-audited every displayed figure against the raw export.</span><span class="a">قيّمت علاوة المضيف المحترف وسلّمت التقرير — المضيفون المتميزون (44% من القوائم) يكسبون 82% أكثر لكل قائمة بإشغال 2.1 ضعف بسعر أقل 8% من غير المتميزين؛ صيغت النتائج في تقرير تنفيذي من خمس صفحات، ثم دُقق كل رقم ظاهر فيه مقابل التصدير الخام.</span></li>
+            </ul>
+            <div class="tools"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span></div>
+            <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p8"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
+          </div>
+        </article>
+
+        <!-- 002 Logistics — real repo files; 6-image gallery, cover slide first -->
         <article class="card">
           <figure class="fig" data-imgs="Logistics Cover.png,logistics 1.png,logistics 2.png,logistics 3.png,logistics 4.png,logistics 5.png">
             <button class="figb" type="button" data-ae="Zoom visual: Logistics Delivery Performance and Delay Analytics" data-aa="تكبير الصورة: تحليل أداء وتأخيرات التسليم اللوجستي">
@@ -1174,7 +1206,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Executive dashboard — five report pages</span><span class="a">لوحة تنفيذية — خمس صفحات تقرير</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">001</span><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span></div>
+            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span></div>
             <h3><span class="e">Logistics Delivery Performance &amp; Delay Analytics</span><span class="a">تحليل أداء وتأخيرات التسليم اللوجستي</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">54.1% late deliveries</mark> — diagnosed order by order</span><span class="a"><mark class="hl">54.1% تسليمات متأخرة</mark> — تم تشخيصها طلباً بطلب</span></p>
             <p class="ctx"><span class="e">Why more than half of all orders miss their promised date, what one lost day costs in returns and rating, and which levers actually move the number — answered end to end, from raw delivery flags to a five-page executive dashboard.</span>
@@ -1188,33 +1220,6 @@ html[dir="rtl"] #progress{transform-origin:right}
             </ul>
             <div class="tools"><span class="chip">Python</span><span class="chip">Excel</span><span class="chip">Power BI</span></div>
             <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p7"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
-          </div>
-        </article>
-
-        <!-- 002 Airbnb Europe — real repo files; 5-image gallery, cover slide first -->
-        <article class="card">
-          <figure class="fig" data-imgs="Airbnb Cover.png,Airbnb 1.png,Airbnb 2.png,Airbnb 3.png,Airbnb 4.png">
-            <button class="figb" type="button" data-ae="Zoom visual: European Airbnb Market and Demand Analysis" data-aa="تكبير الصورة: تحليل سوق وطلب Airbnb الأوروبي">
-              <svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p8"/></svg>
-              <span class="figov" aria-hidden="true"><span><svg class="ic"><use href="#i-zin"/></svg><span class="e">Zoom</span><span class="a">تكبير</span></span></span>
-            </button>
-            <figcaption><span class="e">Executive dashboard — four report pages</span><span class="a">لوحة تنفيذية — أربع صفحات تقرير</span></figcaption>
-          </figure>
-          <div class="cbody">
-            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Market Intelligence</span><span class="a">ذكاء السوق</span></span></div>
-            <h3><span class="e">European Airbnb Market &amp; Demand Analysis</span><span class="a">تحليل سوق وطلب Airbnb الأوروبي</span></h3>
-            <p class="outcome"><span class="e"><mark class="hl">31.3% → 17.2% occupancy</mark> — cooling, demand-led not price-led</span><span class="a"><mark class="hl">تراجع الإشغال من 31.3% إلى 17.2%</mark> — تباطؤ يقوده الطلب لا السعر</span></p>
-            <p class="ctx"><span class="e">Why Europe's short-term rental market is cooling, who actually captures its $1.77B revenue, and what separates winning cities from merely popular ones — answered across 373 cities and 36 countries, from a single headline number to a four-page executive study.</span>
-            <span class="a">لماذا يتباطأ سوق الإيجار القصير الأوروبي، ومن يستحوذ فعلاً على إيراداته البالغة 1.77 مليار دولار، وما الذي يميز المدن الرابحة عن المدن الشائعة فقط — إجابة عبر 373 مدينة و36 دولة، من رقم رئيسي واحد إلى دراسة تنفيذية من أربع صفحات.</span></p>
-            <p class="mini"><span class="e">What was done</span><span class="a">ما الذي تم</span></p>
-            <ul>
-              <li><span class="e">Validated 94,845 of 95,435 exported listings across 373 cities and 36 countries, excluding 590 corrupt rows outright rather than recasting them.</span><span class="a">تحققت من 94,845 من أصل 95,435 قائمة مُصدَّرة عبر 373 مدينة و36 دولة، مع استبعاد 590 صفاً فاسداً كلياً بدلاً من إعادة صياغتها.</span></li>
-              <li><span class="e">Mapped $1.77B in TTM revenue by city and country, showing France, Spain, and the UK hold 56.1% of it while the top 10 of 373 cities capture only 8.2% — concentrated at the top, broad underneath.</span><span class="a">رسمت 1.77 مليار دولار من الإيرادات عبر المدن والدول، لتكشف أن فرنسا وإسبانيا والمملكة المتحدة تستحوذ على 56.1% منها بينما لا تلتقط أفضل 10 مدن من أصل 373 سوى 8.2% — تركّز في القمة واتساع تحتها.</span></li>
-              <li><span class="e">Tested price against quality across 373 cities (r = +0.07) and proved occupancy, not rate, drives revenue — Edinburgh leads on 56.5% occupancy at a mid-tier $328 ADR, and Superhosts earn 82% more at an 8% lower nightly rate.</span><span class="a">اختبرت العلاقة بين السعر والجودة عبر 373 مدينة (r = +0.07) لأثبت أن الإشغال لا السعر هو ما يقود الإيراد — إدنبرة تتصدر بإشغال 56.5% عند سعر متوسط 328 دولاراً، ويكسب المضيفون المتميزون 82% أكثر بسعر أقل بنسبة 8%.</span></li>
-              <li><span class="e">Tracked the cooling signal from TTM to the last 90 days — occupancy fell 14.1 points while rates held nearly flat, with Mediterranean summer destinations like Pollença and Alcúdia unwinding first — and built the four-page executive dashboard that carries the finding end to end.</span><span class="a">تتبّعت إشارة التباطؤ من السنة المتحركة إلى آخر 90 يوماً — تراجع الإشغال 14.1 نقطة بينما بقيت الأسعار شبه ثابتة، مع تراجع وجهات البحر المتوسط الصيفية مثل بولنسا وألكوديا أولاً — وبنيت اللوحة التنفيذية من أربع صفحات التي تحمل النتيجة من البداية للنهاية.</span></li>
-            </ul>
-            <div class="tools"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span></div>
-            <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p8"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
           </div>
         </article>
 
@@ -1631,21 +1636,21 @@ html[dir="rtl"] #progress{transform-origin:right}
 </dialog>
 
 <dialog class="cs" id="cs-p8" aria-labelledby="cs-t8"
-  data-title-en="European Airbnb Market &amp; Demand Analysis — Case Study | Ahmed Galal Abdelhai"
-  data-title-ar="دراسة حالة: تحليل سوق وطلب Airbnb الأوروبي | أحمد جلال">
-  <div class="cs-bar"><span class="cat"><span class="e">Market Intelligence</span><span class="a">ذكاء السوق</span></span>
+  data-title-en="Airbnb Europe Market Intelligence &amp; Revenue Analytics — Case Study | Ahmed Galal Abdelhai"
+  data-title-ar="دراسة حالة: ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا | أحمد جلال">
+  <div class="cs-bar"><span class="cat"><span class="e">Revenue Intelligence</span><span class="a">ذكاء الإيراد</span></span>
     <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="cs-body">
-    <h2 id="cs-t8"><span class="e">European Airbnb Market &amp; Demand Analysis</span><span class="a">تحليل سوق وطلب Airbnb الأوروبي</span></h2>
+    <h2 id="cs-t8"><span class="e">Airbnb Europe Market Intelligence &amp; Revenue Analytics</span><span class="a">ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا</span></h2>
     <p class="cs-quote"><span class="e">Price never explained why a listing succeeds — occupancy did, and occupancy is exactly what started slipping.</span><span class="a">لم يكن السعر يوماً تفسيراً لنجاح قائمة ما — بل الإشغال، وهو بالضبط ما بدأ ينزلق.</span></p>
     <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p8"/></svg></figure>
-    <p class="outcome"><span class="e"><mark class="hl">31.3% → 17.2% occupancy</mark> — cooling, demand-led not price-led</span><span class="a"><mark class="hl">تراجع الإشغال من 31.3% إلى 17.2%</mark> — تباطؤ يقوده الطلب لا السعر</span></p>
-    <p class="ctx"><span class="e">Why Europe's short-term rental market is cooling, who actually captures its $1.77B revenue, and what separates winning cities from merely popular ones — answered across 373 cities and 36 countries.</span><span class="a">لماذا يتباطأ سوق الإيجار القصير الأوروبي، ومن يستحوذ فعلاً على إيراداته، وما الذي يميز المدن الرابحة — عبر 373 مدينة و36 دولة.</span></p>
+    <p class="outcome"><span class="e"><mark class="hl">31.3% of nights sold</mark> — diagnosed city by city</span><span class="a"><mark class="hl">31.3% من الليالي المباعة</mark> — تم تشخيصها مدينة بمدينة</span></p>
+    <p class="ctx"><span class="e">Why Europe's short-term rentals sit empty two nights in three, and what separates the hosts earning 82% more per listing — answered end to end, from 95,435 raw rows to a five-page executive report.</span><span class="a">لماذا تبقى العقارات الأوروبية للإيجار القصير شاغرة ليلتين من كل ثلاث، وما الذي يميز المضيفين الذين يكسبون 82% أكثر لكل قائمة — إجابة من البداية للنهاية.</span></p>
     <ul>
-      <li><span class="e">94,845 of 95,435 exported listings validated across 373 cities and 36 countries; 590 corrupt rows excluded outright.</span><span class="a">التحقق من 94,845 من أصل 95,435 قائمة عبر 373 مدينة و36 دولة؛ استبعاد 590 صفاً فاسداً كلياً.</span></li>
-      <li><span class="e">France, Spain, and the UK hold 56.1% of $1.77B in revenue, while the top 10 of 373 cities capture only 8.2%.</span><span class="a">فرنسا وإسبانيا والمملكة المتحدة تستحوذ على 56.1% من 1.77 مليار دولار، بينما لا تلتقط أفضل 10 مدن سوى 8.2%.</span></li>
-      <li><span class="e">Price proved no proxy for quality (r = +0.07) — occupancy and service drove revenue instead; Superhosts earn 82% more at an 8% lower rate.</span><span class="a">لم يكن السعر مؤشراً للجودة (r = +0.07) — بل الإشغال والخدمة؛ يكسب المضيفون المتميزون 82% أكثر بسعر أقل 8%.</span></li>
-      <li><span class="e">Occupancy fell 14.1 points from TTM to L90D while rates held flat — a demand-led cooling, Mediterranean summer markets first.</span><span class="a">تراجع الإشغال 14.1 نقطة من السنة المتحركة إلى آخر 90 يوماً بينما بقيت الأسعار ثابتة — تباطؤ يقوده الطلب، بدأ بوجهات البحر المتوسط الصيفية.</span></li>
+      <li><span class="e">95,435 raw listings validated — all 57 columns profiled, 590 corrupt rows quarantined, zero duplicate IDs confirmed, 16 currencies USD-normalized into a clean 94,845-listing base.</span><span class="a">التحقق من 95,435 قائمة خام — تدقيق الأعمدة الـ57 كاملة، وعزل 590 صفاً فاسداً، والتأكد من خلو القوائم من التكرار، وتطبيع 16 عملة إلى الدولار.</span></li>
+      <li><span class="e">$1.77B in trailing revenue and 10.98M guest reviews rebuilt across 373 cities and 36 countries, on trailing-12-month and last-90-day windows.</span><span class="a">إعادة بناء 1.77 مليار دولار من الإيرادات المتحركة و10.98 مليون تقييم ضيف عبر 373 مدينة و36 دولة.</span></li>
+      <li><span class="e">France, the UK, and Spain concentrate 56.1% of revenue while the top 10 cities hold just 8.2%; Edinburgh's RevPAR runs 5.7× the European average.</span><span class="a">فرنسا والمملكة المتحدة وإسبانيا تستحوذ على 56.1% من الإيرادات بينما لا تحمل أفضل 10 مدن سوى 8.2%؛ وعائد إدنبرة 5.7 أضعاف المتوسط الأوروبي.</span></li>
+      <li><span class="e">Superhosts (44% of listings) earn 82% more per listing at 2.1× the occupancy while pricing 8% below non-Superhosts — formalized into a five-page executive report.</span><span class="a">المضيفون المتميزون (44% من القوائم) يكسبون 82% أكثر بإشغال 2.1 ضعف وبسعر أقل 8% — صيغت النتائج في تقرير تنفيذي من خمس صفحات.</span></li>
     </ul>
     <div class="tools"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span></div>
   </div>
@@ -2138,20 +2143,30 @@ function initGalleriesAndLightbox(){
      of only resetting the zoom level (which, at the default 100%, looked
      like it did nothing at all). Quick zoom-reset is still available via
      the "0" key and a double-tap/click on the image, so no capability is
-     lost by repurposing this button. -- */
+     lost by repurposing this button.
+     The fullscreen TARGET is document.documentElement, not the dialog
+     itself — requesting fullscreen on an element that is simultaneously a
+     modal <dialog> is where this silently failed before: some real
+     browsers reject that combination even though nothing throws and the
+     promise rejection is easy to swallow unnoticed. Fullscreening the
+     document root is the most universally supported target the API has;
+     the dialog keeps rendering in its own top layer above the page exactly
+     as it already does, and the CSS above reacts to the document's
+     fullscreen state via `html:fullscreen .lb` to fill the screen. -- */
   function currentFullscreenElement(){
     return document.fullscreenElement||document.webkitFullscreenElement||null;
   }
   function toggleFullscreen(){
-    if(currentFullscreenElement()===lb){
+    if(currentFullscreenElement()){
       (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
     }else{
-      const req=lb.requestFullscreen||lb.webkitRequestFullscreen;
-      if(req)req.call(lb).catch(()=>{});
+      const el=document.documentElement;
+      const req=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(req)req.call(el).catch(()=>{});
     }
   }
   function syncFullscreenUI(){
-    const active=currentFullscreenElement()===lb;
+    const active=!!currentFullscreenElement();
     zFit.setAttribute('aria-pressed',String(active));
     zFit.querySelector('.ic-enter').style.display=active?'none':'';
     zFit.querySelector('.ic-exit').style.display=active?'':'none';
