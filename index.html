@@ -269,7 +269,7 @@ body.motion-off [data-reveal]{opacity:1;transform:none}
 .pipe-title b{color:var(--yel)}
 .pipe-grid{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr 52px 1fr;gap:8px;align-items:stretch;margin-top:8px}
 .stage{background:var(--paper2);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sx) 6px 0 var(--shad);padding:22px 18px}
-.stage .sic{position:relative;width:44px;height:44px;background:var(--yel);color:var(--mk);border:2px solid var(--mk);border-radius:12px;box-shadow:2px 2px 0 var(--shad);margin-bottom:14px;transition:transform .25s ease}
+.stage .sic{display:block;position:relative;width:44px;height:44px;background:var(--yel);color:var(--mk);border:2px solid var(--mk);border-radius:12px;box-shadow:2px 2px 0 var(--shad);margin-bottom:14px;transition:transform .25s ease}
 .stage:hover .sic{transform:rotate(-6deg) scale(1.07)}
 .stage .sic .ic{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px}
 .snum{font-size:var(--s7);font-weight:800;letter-spacing:.2em;color:var(--mut)}
@@ -290,7 +290,7 @@ html[dir="rtl"] .pipe svg{transform:scaleX(-1)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .stat{background:var(--paper2);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sx) 6px 0 var(--shad);padding:22px 20px;transition:transform .2s ease}
 .stat:hover{transform:translateY(-3px)}
-.stat-ic{position:relative;width:40px;height:40px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 var(--shad);margin-bottom:14px}
+.stat-ic{display:block;position:relative;width:40px;height:40px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 var(--shad);margin-bottom:14px}
 .stat-ic .ic{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:21px;height:21px;stroke-width:2.1}
 .stat b{display:block;font-size:var(--s8);font-weight:900;line-height:1;letter-spacing:-.02em;direction:ltr;text-align:start}
 .stat span{display:block;margin-top:10px;font-size:var(--s7);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);line-height:1.6}
@@ -751,6 +751,26 @@ html[dir="rtl"] #progress{transform-origin:right}
     <text x="103" y="230" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="900" fill="#F1CB1C">17.8-PT CARRIER GAP</text>
     <text x="370" y="230" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A">17 countries · 8 carriers</text>
   </symbol>
+
+  <symbol id="fig-p8" viewBox="0 0 400 260">
+    <rect width="400" height="260" fill="#FAF8F1"/>
+    <text x="30" y="30" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A" letter-spacing="2">EUROPE · 373 CITIES</text>
+    <g fill="#F1CB1C" fill-opacity=".55" stroke="#0E0B03" stroke-width="1.5">
+      <circle cx="195" cy="68" r="10"/><circle cx="216" cy="84" r="15"/><circle cx="178" cy="96" r="8"/>
+      <circle cx="235" cy="74" r="7"/><circle cx="203" cy="107" r="12"/><circle cx="160" cy="80" r="6"/>
+      <circle cx="250" cy="94" r="9"/><circle cx="186" cy="118" r="6"/><circle cx="220" cy="58" r="6"/>
+      <circle cx="140" cy="68" r="5"/><circle cx="265" cy="110" r="6"/>
+    </g>
+    <circle cx="208" cy="88" r="5" fill="#0E0B03"/>
+    <rect x="30" y="150" width="150" height="50" rx="8" fill="#0E0B03"/>
+    <text x="45" y="177" font-family="Inter,sans-serif" font-size="19" font-weight="900" fill="#F1CB1C">$1.77B</text>
+    <text x="45" y="192" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#FAF8F1" letter-spacing="1">TTM REVENUE</text>
+    <rect x="196" y="150" width="174" height="50" rx="8" fill="#FFFDF7" stroke="#0E0B03" stroke-width="2"/>
+    <text x="210" y="173" font-family="Inter,sans-serif" font-size="13" font-weight="900" fill="#0E0B03">31.3% → 17.2%</text>
+    <text x="210" y="190" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#57534A" letter-spacing="1">OCCUPANCY, TTM → L90D</text>
+    <path d="M30 224H250" stroke="#0E0B03" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/>
+    <text x="370" y="230" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A">36 countries · 94,845 listings</text>
+  </symbol>
 </defs></svg>
 
 <header class="pillnav" id="pillnav">
@@ -1171,7 +1191,34 @@ html[dir="rtl"] #progress{transform-origin:right}
           </div>
         </article>
 
-        <!-- 002 NYC — real repo file: NYC Dashboard.png -->
+        <!-- 002 Airbnb Europe — real repo files; 5-image gallery, cover slide first -->
+        <article class="card">
+          <figure class="fig" data-imgs="Airbnb Cover.png,Airbnb 1.png,Airbnb 2.png,Airbnb 3.png,Airbnb 4.png">
+            <button class="figb" type="button" data-ae="Zoom visual: European Airbnb Market and Demand Analysis" data-aa="تكبير الصورة: تحليل سوق وطلب Airbnb الأوروبي">
+              <svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p8"/></svg>
+              <span class="figov" aria-hidden="true"><span><svg class="ic"><use href="#i-zin"/></svg><span class="e">Zoom</span><span class="a">تكبير</span></span></span>
+            </button>
+            <figcaption><span class="e">Executive dashboard — four report pages</span><span class="a">لوحة تنفيذية — أربع صفحات تقرير</span></figcaption>
+          </figure>
+          <div class="cbody">
+            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Market Intelligence</span><span class="a">ذكاء السوق</span></span></div>
+            <h3><span class="e">European Airbnb Market &amp; Demand Analysis</span><span class="a">تحليل سوق وطلب Airbnb الأوروبي</span></h3>
+            <p class="outcome"><span class="e"><mark class="hl">31.3% → 17.2% occupancy</mark> — cooling, demand-led not price-led</span><span class="a"><mark class="hl">تراجع الإشغال من 31.3% إلى 17.2%</mark> — تباطؤ يقوده الطلب لا السعر</span></p>
+            <p class="ctx"><span class="e">Why Europe's short-term rental market is cooling, who actually captures its $1.77B revenue, and what separates winning cities from merely popular ones — answered across 373 cities and 36 countries, from a single headline number to a four-page executive study.</span>
+            <span class="a">لماذا يتباطأ سوق الإيجار القصير الأوروبي، ومن يستحوذ فعلاً على إيراداته البالغة 1.77 مليار دولار، وما الذي يميز المدن الرابحة عن المدن الشائعة فقط — إجابة عبر 373 مدينة و36 دولة، من رقم رئيسي واحد إلى دراسة تنفيذية من أربع صفحات.</span></p>
+            <p class="mini"><span class="e">What was done</span><span class="a">ما الذي تم</span></p>
+            <ul>
+              <li><span class="e">Validated 94,845 of 95,435 exported listings across 373 cities and 36 countries, excluding 590 corrupt rows outright rather than recasting them.</span><span class="a">تحققت من 94,845 من أصل 95,435 قائمة مُصدَّرة عبر 373 مدينة و36 دولة، مع استبعاد 590 صفاً فاسداً كلياً بدلاً من إعادة صياغتها.</span></li>
+              <li><span class="e">Mapped $1.77B in TTM revenue by city and country, showing France, Spain, and the UK hold 56.1% of it while the top 10 of 373 cities capture only 8.2% — concentrated at the top, broad underneath.</span><span class="a">رسمت 1.77 مليار دولار من الإيرادات عبر المدن والدول، لتكشف أن فرنسا وإسبانيا والمملكة المتحدة تستحوذ على 56.1% منها بينما لا تلتقط أفضل 10 مدن من أصل 373 سوى 8.2% — تركّز في القمة واتساع تحتها.</span></li>
+              <li><span class="e">Tested price against quality across 373 cities (r = +0.07) and proved occupancy, not rate, drives revenue — Edinburgh leads on 56.5% occupancy at a mid-tier $328 ADR, and Superhosts earn 82% more at an 8% lower nightly rate.</span><span class="a">اختبرت العلاقة بين السعر والجودة عبر 373 مدينة (r = +0.07) لأثبت أن الإشغال لا السعر هو ما يقود الإيراد — إدنبرة تتصدر بإشغال 56.5% عند سعر متوسط 328 دولاراً، ويكسب المضيفون المتميزون 82% أكثر بسعر أقل بنسبة 8%.</span></li>
+              <li><span class="e">Tracked the cooling signal from TTM to the last 90 days — occupancy fell 14.1 points while rates held nearly flat, with Mediterranean summer destinations like Pollença and Alcúdia unwinding first — and built the four-page executive dashboard that carries the finding end to end.</span><span class="a">تتبّعت إشارة التباطؤ من السنة المتحركة إلى آخر 90 يوماً — تراجع الإشغال 14.1 نقطة بينما بقيت الأسعار شبه ثابتة، مع تراجع وجهات البحر المتوسط الصيفية مثل بولنسا وألكوديا أولاً — وبنيت اللوحة التنفيذية من أربع صفحات التي تحمل النتيجة من البداية للنهاية.</span></li>
+            </ul>
+            <div class="tools"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span></div>
+            <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p8"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
+          </div>
+        </article>
+
+        <!-- 003 NYC — real repo file: NYC Dashboard.png -->
         <article class="card">
           <figure class="fig" data-imgs="NYC Dashboard.png">
             <button class="figb" type="button" data-ae="Zoom visual: NYC Airbnb Market and Revenue Analysis" data-aa="تكبير الصورة: سوق وإيرادات Airbnb في نيويورك">
@@ -1181,7 +1228,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">NYC Airbnb case-study dashboard — Looker Studio</span><span class="a">لوحة دراسة حالة Airbnb نيويورك — Looker Studio</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
+            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
             <h3><span class="e">NYC Airbnb Market &amp; Revenue Analysis</span><span class="a">تحليل سوق وإيرادات Airbnb في نيويورك</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">48K+ listings</mark> mapped to revenue per location</span><span class="a"><mark class="hl">أكثر من 48 ألف شقة</mark> مرتبطة بالإيراد حسب الموقع</span></p>
             <p class="ctx"><span class="e">Pricing, room types, and revenue structure across NYC's five boroughs — including how much revenue could be earned per month.</span>
@@ -1209,7 +1256,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Financial Performance Dashboard — Power BI</span><span class="a">لوحة الأداء المالي — Power BI</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
+            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
             <h3><span class="e">Financial Performance &amp; Variance Analysis</span><span class="a">تحليل الأداء المالي وتباينات الموازنة</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">$94.8M variance</mark> exposed · 0.011 plan-vs-actual correlation</span><span class="a"><mark class="hl">تباين 94.8 مليون دولار</mark> · ارتباط 0.011 بين المخطط والفعلي</span></p>
             <p class="ctx"><span class="e">A perceived overspending problem that the data revealed as something deeper: a systemic forecasting failure.</span>
@@ -1237,7 +1284,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Power BI dashboard — five report views</span><span class="a">لوحة Power BI — خمس شاشات للتقرير</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">Customer Segmentation &amp; Marketing Analytics</span><span class="a">تقسيم العملاء وتحليلات التسويق</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">82.9% Adjusted R²</mark> — regression model</span><span class="a"><mark class="hl">82.9% معامل تحديد معدّل</mark> — نموذج الانحدار</span></p>
             <p class="ctx"><span class="e">How customers actually behave, how well campaigns and marketing channels perform, and which markers flag churn — answered end to end, from model to dashboard.</span>
@@ -1264,7 +1311,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">RFM tier map — loyal · high spenders · inactive</span><span class="a">خريطة فئات RFM — أوفياء · كبار المنفقين · غير نشطين</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">RFM-Based Customer Analytics</span><span class="a">تحليلات العملاء بقاعدة RFM</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">~4,000 customers</mark> scored from 500K+ transactions</span><span class="a"><mark class="hl">نحو 4,000 عميل</mark> مُقيَّمون من أكثر من 500 ألف معاملة</span></p>
             <p class="ctx"><span class="e">Which customers deserve retention investment — and which are already gone. Worked on the UCI Online Retail dataset of half a million transactions.</span>
@@ -1291,7 +1338,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Join strategy, aggregations, and window functions across 11 tables</span><span class="a">استراتيجية ربط وتجميعات ودوال نوافذ عبر 11 جدولاً</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
+            <div class="ctop"><span class="idx">007</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
             <h3><span class="e">SQL Sales Performance Analysis — Chinook Database</span><span class="a">تحليل أداء المبيعات بـ SQL — قاعدة Chinook</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">22K rows · 11 tables</mark>, fully queried</span><span class="a"><mark class="hl">22 ألف صف · 11 جدولاً</mark> — استعلام كامل</span></p>
             <p class="ctx"><span class="e">Which products, countries, and months actually drive revenue across the Chinook sales database.</span>
@@ -1318,7 +1365,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Published literature review — ASTJ Vol. 3, Issue 2, 2026</span><span class="a">مراجعة أدبيات منشورة — ASTJ المجلد 3، العدد 2، 2026</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">007</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
+            <div class="ctop"><span class="idx">008</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
             <h3><span class="e">Aethea — AI Medical Assistant</span><span class="a">Aethea — مساعد طبي بالذكاء الاصطناعي</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">Published</mark> — ASTJ Vol. 3, Issue 2, 2026</span><span class="a"><mark class="hl">منشور</mark> — ASTJ المجلد 3، العدد 2، 2026</span></p>
             <p class="ctx"><span class="e">University graduation project: the technical argument for an AI medical assistant, built on verified references.</span>
@@ -1561,7 +1608,7 @@ html[dir="rtl"] #progress{transform-origin:right}
   <div class="lb-cap"><span class="cap-txt" id="lbCap"></span></div>
 </dialog>
 
-<!-- ===== CASE STUDY DIALOGS ×7 ===== -->
+<!-- ===== CASE STUDY DIALOGS ×8 ===== -->
 <dialog class="cs" id="cs-p7" aria-labelledby="cs-t7"
   data-title-en="Logistics Delivery Performance &amp; Delay Analytics — Case Study | Ahmed Galal Abdelhai"
   data-title-ar="دراسة حالة: تحليل أداء وتأخيرات التسليم اللوجستي | أحمد جلال">
@@ -1580,6 +1627,27 @@ html[dir="rtl"] #progress{transform-origin:right}
       <li><span class="e">A four-point healing plan: weather-aware ETAs, carrier reallocation, a capped low-priority queue, and a 24-hour slippage guard.</span><span class="a">خطة علاج من أربع نقاط: أوقات وصول تراعي الطقس، وإعادة توزيع شركات الشحن، وطابور أولوية منخفضة محدود، وحارس على أول 24 ساعة من الانزلاق.</span></li>
     </ul>
     <div class="tools"><span class="chip">Python</span><span class="chip">Excel</span><span class="chip">Power BI</span></div>
+  </div>
+</dialog>
+
+<dialog class="cs" id="cs-p8" aria-labelledby="cs-t8"
+  data-title-en="European Airbnb Market &amp; Demand Analysis — Case Study | Ahmed Galal Abdelhai"
+  data-title-ar="دراسة حالة: تحليل سوق وطلب Airbnb الأوروبي | أحمد جلال">
+  <div class="cs-bar"><span class="cat"><span class="e">Market Intelligence</span><span class="a">ذكاء السوق</span></span>
+    <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="cs-body">
+    <h2 id="cs-t8"><span class="e">European Airbnb Market &amp; Demand Analysis</span><span class="a">تحليل سوق وطلب Airbnb الأوروبي</span></h2>
+    <p class="cs-quote"><span class="e">Price never explained why a listing succeeds — occupancy did, and occupancy is exactly what started slipping.</span><span class="a">لم يكن السعر يوماً تفسيراً لنجاح قائمة ما — بل الإشغال، وهو بالضبط ما بدأ ينزلق.</span></p>
+    <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p8"/></svg></figure>
+    <p class="outcome"><span class="e"><mark class="hl">31.3% → 17.2% occupancy</mark> — cooling, demand-led not price-led</span><span class="a"><mark class="hl">تراجع الإشغال من 31.3% إلى 17.2%</mark> — تباطؤ يقوده الطلب لا السعر</span></p>
+    <p class="ctx"><span class="e">Why Europe's short-term rental market is cooling, who actually captures its $1.77B revenue, and what separates winning cities from merely popular ones — answered across 373 cities and 36 countries.</span><span class="a">لماذا يتباطأ سوق الإيجار القصير الأوروبي، ومن يستحوذ فعلاً على إيراداته، وما الذي يميز المدن الرابحة — عبر 373 مدينة و36 دولة.</span></p>
+    <ul>
+      <li><span class="e">94,845 of 95,435 exported listings validated across 373 cities and 36 countries; 590 corrupt rows excluded outright.</span><span class="a">التحقق من 94,845 من أصل 95,435 قائمة عبر 373 مدينة و36 دولة؛ استبعاد 590 صفاً فاسداً كلياً.</span></li>
+      <li><span class="e">France, Spain, and the UK hold 56.1% of $1.77B in revenue, while the top 10 of 373 cities capture only 8.2%.</span><span class="a">فرنسا وإسبانيا والمملكة المتحدة تستحوذ على 56.1% من 1.77 مليار دولار، بينما لا تلتقط أفضل 10 مدن سوى 8.2%.</span></li>
+      <li><span class="e">Price proved no proxy for quality (r = +0.07) — occupancy and service drove revenue instead; Superhosts earn 82% more at an 8% lower rate.</span><span class="a">لم يكن السعر مؤشراً للجودة (r = +0.07) — بل الإشغال والخدمة؛ يكسب المضيفون المتميزون 82% أكثر بسعر أقل 8%.</span></li>
+      <li><span class="e">Occupancy fell 14.1 points from TTM to L90D while rates held flat — a demand-led cooling, Mediterranean summer markets first.</span><span class="a">تراجع الإشغال 14.1 نقطة من السنة المتحركة إلى آخر 90 يوماً بينما بقيت الأسعار ثابتة — تباطؤ يقوده الطلب، بدأ بوجهات البحر المتوسط الصيفية.</span></li>
+    </ul>
+    <div class="tools"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span></div>
   </div>
 </dialog>
 
