@@ -287,7 +287,9 @@ html[dir="rtl"] .pipe svg{transform:scaleX(-1)}
 /* ===== IMPACT ===== */
 .stats-sec{background:var(--yel)}
 .stats-sec .kick{color:var(--mk);opacity:.72}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.stats{grid-template-columns:1fr}}
 .stat{background:var(--paper2);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sx) 6px 0 var(--shad);padding:22px 20px;transition:transform .2s ease}
 .stat:hover{transform:translateY(-3px)}
 .stat-ic{display:block;position:relative;width:40px;height:40px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 var(--shad);margin-bottom:14px}
@@ -587,6 +589,12 @@ html[dir="rtl"] #progress{transform-origin:right}
   .lb-title{font-size:var(--s7)}
 }
 </style>
+<!-- Preload the cover image of the first 3 cards so the gallery renders instantly
+     on first paint — only the cover (slide 1) is preloaded; the remaining slides
+     for each card load lazily once the cover is in view. -->
+<link rel="preload" as="image" href="Talabat/Talabat Cover.png">
+<link rel="preload" as="image" href="Salla/Salla Cover.png">
+<link rel="preload" as="image" href="Airbnb/Airbnb Cover.png">
 </head>
 <body>
 <div id="progress" aria-hidden="true"></div>
@@ -671,6 +679,31 @@ html[dir="rtl"] #progress{transform-origin:right}
     <rect x="30" y="206" width="140" height="26" rx="13" fill="#0E0B03"/>
     <text x="100" y="223" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="900" fill="#F1CB1C">EGP 3.98M AT RISK</text>
     <text x="370" y="223" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A">9 canvases · 06:00 signal</text>
+  </symbol>
+
+  <symbol id="fig-p10" viewBox="0 0 400 260">
+    <!-- Salla: API scaling wall / rate-limit breach illustration -->
+    <rect width="400" height="260" fill="#FAF8F1"/>
+    <text x="30" y="28" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A" letter-spacing="2">SAUDI ARABIA · 68,000 MERCHANTS</text>
+    <!-- Waterfall bars: cohort GMV → losses → remaining -->
+    <g stroke="#0E0B03" stroke-width="2">
+      <rect x="30" y="60" width="50" height="120" rx="4" fill="#0E0B03"/>
+      <rect x="98" y="88" width="40" height="92" rx="4" fill="#FAF8F1" stroke="#0E0B03"/>
+      <rect x="150" y="104" width="40" height="76" rx="4" fill="#FAF8F1" stroke="#0E0B03"/>
+      <rect x="202" y="116" width="40" height="64" rx="4" fill="#FAF8F1" stroke="#0E0B03"/>
+      <rect x="254" y="128" width="40" height="52" rx="4" fill="#FAF8F1" stroke="#0E0B03"/>
+      <rect x="306" y="85" width="50" height="95" rx="4" fill="#F1CB1C"/>
+    </g>
+    <text x="55" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="800" fill="#FAF8F1">15.9B</text>
+    <text x="118" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#57534A">-2.4B</text>
+    <text x="170" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#57534A">-1.7B</text>
+    <text x="222" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#57534A">-0.9B</text>
+    <text x="274" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#57534A">-2.4B</text>
+    <text x="331" y="195" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="800" fill="#0E0B03">8.5B</text>
+    <path d="M30 206H368" stroke="#0E0B03" stroke-width="1.5"/>
+    <rect x="30" y="218" width="150" height="22" rx="11" fill="#0E0B03"/>
+    <text x="105" y="233" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="900" fill="#F1CB1C">1.7/5 · 45% API FAILURES</text>
+    <text x="370" y="233" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#57534A">SAR 18.23M · 31.4× ROI</text>
   </symbol>
 
   <symbol id="fig-p5" viewBox="0 0 400 260">
@@ -1056,6 +1089,7 @@ html[dir="rtl"] #progress{transform-origin:right}
         </div>
       </div>
       <div class="stats">
+        <!-- row 1 — 4 cards -->
         <div class="stat" data-reveal>
           <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-gauge"/></svg></span>
           <b data-count="82.9" data-decimals="1" data-suffix="%">82.9%</b><span><span class="e">Adjusted R² — segmentation model</span><span class="a">معامل تحديد معدّل — نموذج التقسيم</span></span></div>
@@ -1065,15 +1099,22 @@ html[dir="rtl"] #progress{transform-origin:right}
         <div class="stat" data-reveal style="--d:2">
           <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-predict"/></svg></span>
           <b data-count="94.8" data-decimals="1" data-prefix="$" data-suffix="M">$94.8M</b><span><span class="e">budget variance exposed · r = 0.011</span><span class="a">تباين موازنة مُكشوف · r = 0.011</span></span></div>
-        <div class="stat" data-reveal>
+        <div class="stat" data-reveal style="--d:3">
           <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-grid"/></svg></span>
           <b data-count="22" data-suffix="K × 11">22K × 11</b><span><span class="e">rows across relational tables</span><span class="a">صفوف عبر 11 جدولاً ارتباطياً</span></span></div>
-        <div class="stat" data-reveal style="--d:1">
-          <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-pie"/></svg></span>
-          <b data-count="48" data-suffix="K+">48K+</b><span><span class="e">Airbnb listings analyzed</span><span class="a">شقة Airbnb مُحلَّلة</span></span></div>
+        <!-- row 2 — 4 cards: Talabat × 2, Salla × 2 -->
         <div class="stat" data-reveal>
+          <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-funnel"/></svg></span>
+          <b data-count="9812" data-suffix="">9,812</b><span><span class="e">orders lost to clock-hour failure · Talabat Egypt</span><span class="a">طلباً ضائعاً بسبب فشل ساعي · طلبات مصر</span></span></div>
+        <div class="stat" data-reveal style="--d:1">
           <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-doc"/></svg></span>
           <b data-count="50" data-suffix="K+">50K+</b><span><span class="e">deliveries audited · 17 countries, 8 carriers</span><span class="a">عملية تسليم دُققت · 17 دولة و8 شركات شحن</span></span></div>
+        <div class="stat" data-reveal style="--d:2">
+          <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-layers"/></svg></span>
+          <b data-count="248" data-suffix="K+">248K+</b><span><span class="e">support contacts audited · Salla Saudi Arabia</span><span class="a">تذكرة دعم دُققت · سلة المملكة العربية السعودية</span></span></div>
+        <div class="stat" data-reveal style="--d:3">
+          <span class="stat-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-predict"/></svg></span>
+          <b data-count="31.4" data-decimals="1" data-suffix="×">31.4×</b><span><span class="e">ROI · SAR 18.23M net · payback 1.2 weeks · Salla</span><span class="a">عائد استثمار · 18.23 مليون ريال صافٍ · استرداد 1.2 أسبوع · سلة</span></span></div>
       </div>
     </div>
   </section>
@@ -1197,7 +1238,34 @@ html[dir="rtl"] #progress{transform-origin:right}
           </div>
         </article>
 
-        <!-- 002 Airbnb Europe — real repo files; 5-image gallery, cover slide first -->
+        <!-- 002 Salla — real repo files; 6-image gallery (cover + 5 pages), cover first -->
+        <article class="card">
+          <figure class="fig" data-imgs="Salla/Salla Cover.png,Salla/Salla 1.png,Salla/Salla 2.png,Salla/Salla 3.png,Salla/Salla 4.png,Salla/Salla 5.png">
+            <button class="figb" type="button" data-ae="Zoom visual: Salla Saudi Arabia Support Intelligence and Operations Analytics" data-aa="تكبير الصورة: ذكاء الدعم وتحليلات العمليات لسلة المملكة العربية السعودية">
+              <svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p10"/></svg>
+              <span class="figov" aria-hidden="true"><span><svg class="ic"><use href="#i-zin"/></svg><span class="e">Zoom</span><span class="a">تكبير</span></span></span>
+            </button>
+            <figcaption><span class="e">Executive dashboard — five report pages</span><span class="a">لوحة تنفيذية — خمس صفحات تقرير</span></figcaption>
+          </figure>
+          <div class="cbody">
+            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Operations Intelligence</span><span class="a">ذكاء العمليات</span></span></div>
+            <h3><span class="e">Salla Saudi Arabia Support Intelligence &amp; Operations Analytics</span><span class="a">ذكاء الدعم وتحليلات العمليات لسلة المملكة العربية السعودية</span></h3>
+            <p class="outcome"><span class="e"><mark class="hl">144,300 contacts unresolved</mark> — the wall did it</span><span class="a"><mark class="hl">144,300 تذكرة غير محلولة</mark> — الجدار هو السبب</span></p>
+            <p class="ctx"><span class="e">A queue answering 9 of 10 calls in 29.8 seconds still carries a 1.7/5 public rating, because 45% of the 248,373 contacts behind it were API failures no agent could patch. This case follows those records upstream to a silent rate-limit wall at ~1,000 orders a day — and the executive audit went from 248,373 contacts to one clean answer.</span>
+            <span class="a">طابور يُجيب على 9 من كل 10 مكالمات في 29.8 ثانية لا يزال يحمل تقييماً عاماً 1.7/5، لأن 45% من 248,373 تذكرة وراءه كانت أعطال API لم يستطع أي وكيل إصلاحها. تتبّع هذا الملف السجلات إلى مصدرها لجداراً صامتاً لتحديد المعدل عند ~1,000 طلب يومياً — وانتهى التدقيق التنفيذي من 248,373 تذكرة إلى إجابة واحدة واضحة.</span></p>
+            <p class="mini"><span class="e">What was done</span><span class="a">ما الذي تم</span></p>
+            <ul>
+              <li><span class="e">248,373 contacts analysed in three strict phases — profiled every field, audited the 52-day operating window (1,251 hours) across 7 service classes, confirmed zero duplicate IDs, and traced every unresolved ticket back to its first touch.</span><span class="a">تحليل 248,373 تذكرة في ثلاث مراحل صارمة — دققت كل حقل، وراجعت نافذة التشغيل البالغة 52 يوماً (1,251 ساعة) عبر 7 فئات خدمة، وتأكدت من خلو المعرفات من التكرار، وتتبّعت كل تذكرة غير محلولة إلى نقطة تلامسها الأولى.</span></li>
+              <li><span class="e">Audited the operation end to end — SAR 15.9B of cohort GMV at the breach line, of which SAR 7.4B (47%) never lands safely: SAR 2.4B to stock-desync overselling, SAR 1.7B to silent webhook drops, SAR 0.9B to checkout abandonment, and SAR 2.4B walking out with 571 churned merchants.</span><span class="a">دققت العملية من البداية للنهاية — 15.9 مليار ريال من الإيراد الإجمالي للمجموعة عند خط الاختراق، لا يُحقَّق منه 7.4 مليار ريال (47%) بأمان: 2.4 مليار لفائض البيع من تعارض المخزون، و1.7 مليار لإسقاطات الويب هوك الصامتة، و0.9 مليار للتخلي عن الدفع، و2.4 مليار يخرج مع 571 تاجراً مُتسرِّباً.</span></li>
+              <li><span class="e">Ran the suspect list and cleared the agents — 89.1% answered and 29.8s average speed clear the queue; 63.4% of hours breaching SLA with 12.4% severe tails and a 1.7/5 Trustpilot pointed upstream; and the wall confirmed it: 851 requests throttled a day at ~1,000 orders, each retried three times.</span><span class="a">أجريت قائمة المشتبه بهم وبرّأت الوكلاء — 89.1% معدل إجابة و29.8 ثانية متوسط سرعة يُصفّيان الطابور؛ 63.4% من ساعات العمل تتجاوز مستوى الخدمة بذيول شديدة 12.4% وتقييم 1.7/5 يشير للأعلى؛ والجدار يؤكد: 851 طلباً يومياً مُعاقَباً عند ~1,000 طلب، يُعاد إرسال كل منها ثلاث مرات.</span></li>
+              <li><span class="e">Closed the case with a fix — token-bucket middleware queues the burst (zero rejections, 35s p95), n8n auto-heal pings merchants on WhatsApp inside 60 seconds (62.9% machine-first), Tier-2 keyword routing closes critical failures in 4 hours — formalized into a SAR 18.23M · 31.4× ROI playbook.</span><span class="a">أغلقت القضية بحل — جدار الرمز الدلوي يُدير الارتفاع المفاجئ (صفر رفض، 35 ثانية p95)، وn8n التشافي الذاتي يُخطر التجار على واتساب في 60 ثانية (62.9% آلي أولاً)، ويُغلق توجيه الكلمات المفتاحية للمستوى الثاني الأعطال الحرجة في 4 ساعات — مُرسَّم في دليل عمل بـ18.23 مليون ريال و31.4 ضعف عائد استثمار.</span></li>
+            </ul>
+            <div class="tools"><span class="chip">Excel</span><span class="chip">Python</span><span class="chip">n8n</span><span class="chip">Power BI</span></div>
+            <div class="cacts"><button class="btn ghost" type="button" data-cs="cs-p10"><span class="e">Open case study</span><span class="a">افتح دراسة الحالة</span><svg class="ic" aria-hidden="true"><use href="#i-arr"/></svg></button></div>
+          </div>
+        </article>
+
+        <!-- 003 Airbnb Europe — real repo files; 5-image gallery, cover slide first -->
         <article class="card">
           <figure class="fig" data-imgs="Airbnb/Airbnb Cover.png,Airbnb/Airbnb 1.png,Airbnb/Airbnb 2.png,Airbnb/Airbnb 3.png,Airbnb/Airbnb 4.png">
             <button class="figb" type="button" data-ae="Zoom visual: Airbnb Europe Market Intelligence and Revenue Analytics" data-aa="تكبير الصورة: ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا">
@@ -1207,7 +1275,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Executive report — five pages</span><span class="a">تقرير تنفيذي — خمس صفحات</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">002</span><span class="cat"><span class="e">Revenue Intelligence</span><span class="a">ذكاء الإيراد</span></span></div>
+            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Revenue Intelligence</span><span class="a">ذكاء الإيراد</span></span></div>
             <h3><span class="e">Airbnb Europe Market Intelligence &amp; Revenue Analytics</span><span class="a">ذكاء السوق وتحليلات الإيرادات لـ Airbnb أوروبا</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">31.3% of nights sold</mark> — diagnosed city by city</span><span class="a"><mark class="hl">31.3% من الليالي المباعة</mark> — تم تشخيصها مدينة بمدينة</span></p>
             <p class="ctx"><span class="e">Why Europe's short-term rentals sit empty two nights in three, and what separates the hosts earning 82% more per listing — answered end to end, from 95,435 raw rows to a five-page executive report.</span>
@@ -1234,7 +1302,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Executive dashboard — five report pages</span><span class="a">لوحة تنفيذية — خمس صفحات تقرير</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">003</span><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span></div>
+            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Supply Chain Analytics</span><span class="a">تحليلات سلسلة الإمداد</span></span></div>
             <h3><span class="e">Logistics Delivery Performance &amp; Delay Analytics</span><span class="a">تحليل أداء وتأخيرات التسليم اللوجستي</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">54.1% late deliveries</mark> — diagnosed order by order</span><span class="a"><mark class="hl">54.1% تسليمات متأخرة</mark> — تم تشخيصها طلباً بطلب</span></p>
             <p class="ctx"><span class="e">Why more than half of all orders miss their promised date, what one lost day costs in returns and rating, and which levers actually move the number — answered end to end, from raw delivery flags to a five-page executive dashboard.</span>
@@ -1261,7 +1329,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Financial Performance Dashboard — Power BI</span><span class="a">لوحة الأداء المالي — Power BI</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">004</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
+            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Performance &amp; Forecasting</span><span class="a">الأداء والتنبؤ</span></span></div>
             <h3><span class="e">Financial Performance &amp; Variance Analysis</span><span class="a">تحليل الأداء المالي وتباينات الموازنة</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">$94.8M variance</mark> exposed · 0.011 plan-vs-actual correlation</span><span class="a"><mark class="hl">تباين 94.8 مليون دولار</mark> · ارتباط 0.011 بين المخطط والفعلي</span></p>
             <p class="ctx"><span class="e">A perceived overspending problem that the data revealed as something deeper: a systemic forecasting failure.</span>
@@ -1289,7 +1357,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Power BI dashboard — five report views</span><span class="a">لوحة Power BI — خمس شاشات للتقرير</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">005</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">Customer Segmentation &amp; Marketing Analytics</span><span class="a">تقسيم العملاء وتحليلات التسويق</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">82.9% Adjusted R²</mark> — regression model</span><span class="a"><mark class="hl">82.9% معامل تحديد معدّل</mark> — نموذج الانحدار</span></p>
             <p class="ctx"><span class="e">How customers actually behave, how well campaigns and marketing channels perform, and which markers flag churn — answered end to end, from model to dashboard.</span>
@@ -1316,7 +1384,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">RFM tier map — loyal · high spenders · inactive</span><span class="a">خريطة فئات RFM — أوفياء · كبار المنفقين · غير نشطين</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">006</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
+            <div class="ctop"><span class="idx">007</span><span class="cat"><span class="e">Customer Intelligence</span><span class="a">ذكاء العملاء</span></span></div>
             <h3><span class="e">RFM-Based Customer Analytics</span><span class="a">تحليلات العملاء بقاعدة RFM</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">~4,000 customers</mark> scored from 500K+ transactions</span><span class="a"><mark class="hl">نحو 4,000 عميل</mark> مُقيَّمون من أكثر من 500 ألف معاملة</span></p>
             <p class="ctx"><span class="e">Which customers deserve retention investment — and which are already gone. Worked on the UCI Online Retail dataset of half a million transactions.</span>
@@ -1343,7 +1411,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Join strategy, aggregations, and window functions across 11 tables</span><span class="a">استراتيجية ربط وتجميعات ودوال نوافذ عبر 11 جدولاً</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">007</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
+            <div class="ctop"><span class="idx">008</span><span class="cat"><span class="e">Market &amp; Revenue</span><span class="a">السوق والإيرادات</span></span></div>
             <h3><span class="e">SQL Sales Performance Analysis — Chinook Database</span><span class="a">تحليل أداء المبيعات بـ SQL — قاعدة Chinook</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">22K rows · 11 tables</mark>, fully queried</span><span class="a"><mark class="hl">22 ألف صف · 11 جدولاً</mark> — استعلام كامل</span></p>
             <p class="ctx"><span class="e">Which products, countries, and months actually drive revenue across the Chinook sales database.</span>
@@ -1370,7 +1438,7 @@ html[dir="rtl"] #progress{transform-origin:right}
             <figcaption><span class="e">Published literature review — ASTJ Vol. 3, Issue 2, 2026</span><span class="a">مراجعة أدبيات منشورة — ASTJ المجلد 3، العدد 2، 2026</span></figcaption>
           </figure>
           <div class="cbody">
-            <div class="ctop"><span class="idx">008</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
+            <div class="ctop"><span class="idx">009</span><span class="cat"><span class="e">Research / Publication</span><span class="a">بحث / منشور</span></span></div>
             <h3><span class="e">Aethea — AI Medical Assistant</span><span class="a">Aethea — مساعد طبي بالذكاء الاصطناعي</span></h3>
             <p class="outcome"><span class="e"><mark class="hl">Published</mark> — ASTJ Vol. 3, Issue 2, 2026</span><span class="a"><mark class="hl">منشور</mark> — ASTJ المجلد 3، العدد 2، 2026</span></p>
             <p class="ctx"><span class="e">University graduation project: the technical argument for an AI medical assistant, built on verified references.</span>
@@ -1613,7 +1681,28 @@ html[dir="rtl"] #progress{transform-origin:right}
   <div class="lb-cap"><span class="cap-txt" id="lbCap"></span></div>
 </dialog>
 
-<!-- ===== CASE STUDY DIALOGS ×9 ===== -->
+<!-- ===== CASE STUDY DIALOGS ×10 ===== -->
+<dialog class="cs" id="cs-p10" aria-labelledby="cs-t10"
+  data-title-en="Salla Saudi Arabia Support Intelligence &amp; Operations Analytics — Case Study | Ahmed Galal Abdelhai"
+  data-title-ar="دراسة حالة: ذكاء الدعم وتحليلات العمليات لسلة المملكة العربية السعودية | أحمد جلال">
+  <div class="cs-bar"><span class="cat"><span class="e">Operations Intelligence</span><span class="a">ذكاء العمليات</span></span>
+    <button class="xbtn" type="button" data-close data-ae="Close" data-aa="إغلاق"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="cs-body">
+    <h2 id="cs-t10"><span class="e">Salla Saudi Arabia Support Intelligence &amp; Operations Analytics</span><span class="a">ذكاء الدعم وتحليلات العمليات لسلة المملكة العربية السعودية</span></h2>
+    <p class="cs-quote"><span class="e">The queue was innocent. 89.1% answered. The API wall that filled it wasn't even visible from inside the support console.</span><span class="a">الطابور كان بريئاً. 89.1% نسبة إجابة. جدار API الذي ملأه لم يكن مرئياً حتى من داخل لوحة الدعم.</span></p>
+    <figure class="cs-fig"><svg class="fsvg" viewBox="0 0 400 260" aria-hidden="true"><use href="#fig-p10"/></svg></figure>
+    <p class="outcome"><span class="e"><mark class="hl">144,300 contacts unresolved</mark> — the wall did it</span><span class="a"><mark class="hl">144,300 تذكرة غير محلولة</mark> — الجدار هو السبب</span></p>
+    <p class="ctx"><span class="e">A queue answering 9 of 10 calls in 29.8 seconds still carries a 1.7/5 public rating, because 45% of the 248,373 contacts behind it were API failures no agent could patch — traced upstream to a silent rate-limit wall at ~1,000 orders a day.</span><span class="a">طابور يُجيب على 9 من كل 10 مكالمات في 29.8 ثانية لا يزال يحمل تقييماً عاماً 1.7/5، لأن 45% من 248,373 تذكرة وراءه كانت أعطال API — تتبّعها جداراً صامتاً لتحديد المعدل عند ~1,000 طلب يومياً.</span></p>
+    <ul>
+      <li><span class="e">248,373 contacts in three phases — 52-day window, 7 service classes, zero duplicate IDs, every unresolved ticket traced to its first touch.</span><span class="a">248,373 تذكرة في ثلاث مراحل — 52 يوماً، 7 فئات خدمة، صفر معرفات مكررة، كل تذكرة غير محلولة إلى نقطة تلامسها الأولى.</span></li>
+      <li><span class="e">SAR 15.9B cohort GMV audited — SAR 7.4B (47%) never lands safely across four failure modes; 571 merchants churn carrying SAR 2.4B out the door.</span><span class="a">تدقيق 15.9 مليار ريال من الإيراد الإجمالي — 7.4 مليار ريال (47%) لا يُحقَّق بأمان عبر أربعة أنماط فشل؛ 571 تاجراً يتسرّب حاملاً 2.4 مليار ريال.</span></li>
+      <li><span class="e">Agents cleared: 89.1% answered, 29.8s speed. SLA breach concentrated: 63.4% hours, 12.4% severe. Wall confirmed: 851 throttles/day, each retried ×3.</span><span class="a">تبرئة الوكلاء: 89.1% إجابة، 29.8 ثانية. تركّز خرق مستوى الخدمة: 63.4% من الساعات، 12.4% شديدة. الجدار مؤكَّد: 851 تقييداً يومياً، يُعاد إرسال كل منها ×3.</span></li>
+      <li><span class="e">Three-pillar fix delivered: token-bucket (zero rejections, 35s p95), n8n WhatsApp auto-heal (62.9% machine-first, &lt;60s notice), Tier-2 keyword routing (&lt;4h critical close) — SAR 18.23M net · 31.4× ROI · payback 1.2 weeks.</span><span class="a">تسليم حل ثلاثي الأعمدة: جدار الرمز الدلوي (صفر رفض، 35 ثانية p95)، تشافي واتساب الذاتي بـn8n (62.9% آلي، &lt;60 ثانية)، توجيه مفتاحي للمستوى الثاني (&lt;4 ساعات) — 18.23 مليون ريال صافٍ · 31.4× عائد · استرداد 1.2 أسبوع.</span></li>
+    </ul>
+    <div class="tools"><span class="chip">Excel</span><span class="chip">Python</span><span class="chip">n8n</span><span class="chip">Power BI</span></div>
+  </div>
+</dialog>
+
 <dialog class="cs" id="cs-p9" aria-labelledby="cs-t9"
   data-title-en="Talabat Egypt Order Delivery Intelligence &amp; Operations Analytics — Case Study | Ahmed Galal Abdelhai"
   data-title-ar="دراسة حالة: ذكاء الطلبات وتحليلات العمليات لطلبات مصر | أحمد جلال">
@@ -1892,7 +1981,15 @@ function initGalleriesAndLightbox(){
       const sl=document.createElement('div');sl.className='g-slide';
       const im=document.createElement('img');
       im.src=s.src;im.alt=alt+' — '+(i+1)+'/'+srcs.length;
-      im.loading='lazy';im.decoding='async';im.draggable=false;
+      /* First slide loads eagerly (cover image — the browser's already
+         fetching it via <link rel="preload"> for the first 3 cards, so this
+         just marks it as high-priority and prevents a lazy-load deferral).
+         Subsequent slides load lazily — they're hidden off-screen in the
+         track and don't need to block the initial render. */
+      im.loading=i===0?'eager':'lazy';
+      im.decoding=i===0?'sync':'async';
+      if(i===0)im.setAttribute('fetchpriority','high');
+      im.draggable=false;
       sl.appendChild(im);track.appendChild(sl);
     });
     g.appendChild(track);
